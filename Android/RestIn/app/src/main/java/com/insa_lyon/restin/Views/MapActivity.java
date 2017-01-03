@@ -1,4 +1,4 @@
-package com.insa_lyon.restin;
+package com.insa_lyon.restin.Views;
 
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.insa_lyon.restin.R;
 
 public class MapActivity extends AppCompatActivity {
     MapView mapView;
