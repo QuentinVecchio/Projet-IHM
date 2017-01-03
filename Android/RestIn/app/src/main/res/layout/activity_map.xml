@@ -10,8 +10,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.insa_lyon.restin.MapActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <com.google.android.gms.maps.MapView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mapView" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="308dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Search"
+                android:ems="10"
+                android:id="@+id/searchEditText" />
+
+            <Button
+                android:text="F"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filtreButton" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:id="@+id/restaurantListView" />
+    </LinearLayout>
 </RelativeLayout>
