@@ -1,0 +1,8 @@
+project 'RestIn.xcodeproj’
+
+#platform :ios, "8.0"
+
+target 'RestIn' do
+	use_frameworks!
+	pod 'Charts/Realm'
+end
