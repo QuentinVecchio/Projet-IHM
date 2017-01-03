@@ -10,4 +10,98 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.insa_lyon.restin.Views.RestaurantActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <com.google.android.gms.maps.MapView
+            android:layout_width="match_parent"
+            android:layout_height="231dp"
+            android:id="@+id/mapView" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:numStars="5"
+                android:isIndicator="false"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_margin="10dp"
+                android:rating="4"
+                android:stepSize="0.1" />
+
+            <TextView
+                android:text="10 Avis"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="gravity"
+                android:id="@+id/textView2"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_margin="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:text="Menu du Jour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/menu"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:autoText="false"
+                android:capitalize="none"
+                android:clickable="false"
+                android:fadeScrollbars="false"
+                android:textAlignment="gravity"
+                android:gravity="top|center_vertical|center_horizontal"
+                android:textSize="24sp" />
+
+            <TextView
+                android:text="Entrées"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/entree"
+                android:gravity="top|center_vertical|center_horizontal"
+                android:textAlignment="gravity"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:text="Plats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/plat"
+                android:textAlignment="gravity"
+                android:gravity="top|center_vertical|center_horizontal"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:text="Desserts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dessert"
+                android:gravity="top|center_vertical|center_horizontal"
+                android:textAlignment="gravity"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 </RelativeLayout>
