@@ -32,6 +32,7 @@ public class MapActivity extends AppCompatActivity {
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
+
     }
 
     @Override
