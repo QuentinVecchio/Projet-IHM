@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.insa_lyon.restin.Modeles.Restaurant;
@@ -45,12 +46,17 @@ public class RestaurantAdapter extends BaseAdapter {
         TextView nameTextView = (TextView)layoutItem.findViewById(R.id.nameTextView);
         TextView waitingTimeTextView = (TextView)layoutItem.findViewById(R.id.waitingTimeTextView);
         TextView distanceTextView = (TextView)layoutItem.findViewById(R.id.distanceTextView);
+        TextView opinionNumberTextView = (TextView)layoutItem.findViewById(R.id.opinionNumberTextView);
+        RatingBar ratingBar = (RatingBar)layoutItem.findViewById(R.id.ratingBar);
+        ratingBar.setRating(3);
+
 
         Restaurant restaurant = restaurants.get(position);
 
         nameTextView.setText(restaurant.getName());
-        waitingTimeTextView.setText("Attente : ???min");
-        distanceTextView.setText("???m");
+        waitingTimeTextView.setText("Attente : 0 min");
+        distanceTextView.setText("0 m");
+        opinionNumberTextView.setText("0 avis");
 
         return layoutItem;
     }

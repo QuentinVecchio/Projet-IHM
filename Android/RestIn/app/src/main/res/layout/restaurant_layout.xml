@@ -6,37 +6,74 @@
     android:orientation="vertical"
     android:layout_margin="10dp">
 
-    <TextView android:text="Ninkasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:id="@+id/nameTextView"
-        android:textAlignment="textStart">
-    </TextView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <TextView android:text="Ninkasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:id="@+id/nameTextView"
+            android:textAlignment="textStart"
+            android:layout_weight="1.02">
+        </TextView>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:isIndicator="true"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
 
     <TextView android:text="Attente : 10min"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@android:color/black"
         android:id="@+id/waitingTimeTextView"
-        android:textAlignment="textStart">
+        android:textAlignment="textStart"
+        android:layout_weight="1">
     </TextView>
 
-    <TextView android:text="180m"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:id="@+id/distanceTextView"
-        android:textAlignment="textStart">
-    </TextView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView android:text="180m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:id="@+id/distanceTextView"
+            android:textAlignment="textStart"
+            android:layout_weight="1">
+        </TextView>
+
+        <TextView
+            android:text="0 avis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/opinionNumberTextView"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 
 </LinearLayout>
