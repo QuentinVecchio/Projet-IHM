@@ -47,6 +47,6 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="162dp"
-            android:id="@+id/restaurantListView" />
+            android:id="@+id/restaurant_listView" />
     </LinearLayout>
 </RelativeLayout>
