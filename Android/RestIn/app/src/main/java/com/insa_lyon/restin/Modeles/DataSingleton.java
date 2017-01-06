@@ -6,23 +6,23 @@ import java.util.ArrayList;
  * Created by quentinvecchio on 03/01/2017.
  */
 
-public class RestaurantFactory {
-    private RestaurantFactory instance = null;
+public class DataSingleton {
+    private static DataSingleton instance = null;
 
-    private RestaurantFactory() {
+    private DataSingleton() {
         if(instance == null) {
-            instance = new RestaurantFactory();
+            instance = new DataSingleton();
         }
     }
 
-    public RestaurantFactory getInstance() {
+    public static DataSingleton getInstance() {
         if(instance == null) {
-            instance = new RestaurantFactory();
+            instance = new DataSingleton();
         }
         return instance;
     }
 
-    static ArrayList<Restaurant> getRestaurants() {
+    public static ArrayList<Restaurant> getRestaurants() {
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         //Restaurant RU Jussieu
         ArrayList<Avis> avisRUJussieu = new ArrayList<Avis>();

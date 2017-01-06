@@ -1,15 +1,14 @@
 package com.insa_lyon.restin.Views;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.GoogleMap;
+
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
+import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.R;
 
 public class MapActivity extends AppCompatActivity {
@@ -33,7 +32,8 @@ public class MapActivity extends AppCompatActivity {
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
-
+        Adapter adapter = new RestaurantAdapter(this, DataSingleton.getInstance())
+        listView.setAdapter();
     }
 
     @Override
