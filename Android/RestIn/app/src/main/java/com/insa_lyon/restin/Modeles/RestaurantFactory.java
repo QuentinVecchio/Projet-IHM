@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class RestaurantFactory {
-    private RestaurantFactory instance;
+    private RestaurantFactory instance = null;
 
     private RestaurantFactory() {
         if(instance == null) {
@@ -16,6 +16,9 @@ public class RestaurantFactory {
     }
 
     public RestaurantFactory getInstance() {
+        if(instance == null) {
+            instance = new RestaurantFactory();
+        }
         return instance;
     }
 
