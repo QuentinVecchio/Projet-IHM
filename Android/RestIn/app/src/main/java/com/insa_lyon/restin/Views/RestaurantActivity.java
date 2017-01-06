@@ -31,21 +31,22 @@ public class RestaurantActivity extends AppCompatActivity {
         LinearLayout mLayoutP = (LinearLayout) findViewById(R.id.dishContainer);
         LinearLayout mLayoutD = (LinearLayout) findViewById(R.id.dessertContainer);
 
-        for(String e : menu.getEntrees()) {
+        for (String e : menu.getEntrees()) {
             TextView textView = new TextView(this);
             textView.setText(e);
             mLayout.addView(textView);
         }
 
-        for(String e : menu.getPlats()) {
+        for (String e : menu.getPlats()) {
             TextView textView = new TextView(this);
             textView.setText(e);
             mLayoutP.addView(textView);
         }
 
-        for(String e : menu.getDesserts()) {
+        for (String e : menu.getDesserts()) {
             TextView textView = new TextView(this);
             textView.setText(e);
             mLayoutD.addView(textView);
         }
+    }
 }
