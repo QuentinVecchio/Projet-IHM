@@ -2,7 +2,6 @@ package com.insa_lyon.restin.Views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -10,6 +9,7 @@ import android.widget.ListView;
 import com.google.android.gms.maps.MapView;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.R;
+
 
 public class MapActivity extends AppCompatActivity {
     MapView mapView;
@@ -32,8 +32,10 @@ public class MapActivity extends AppCompatActivity {
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
-        Adapter adapter = new RestaurantAdapter(this, DataSingleton.getInstance())
-        listView.setAdapter();
+        RestaurantAdapter adapter = new RestaurantAdapter(this, DataSingleton.getInstance().getRestaurants());
+        listView.setAdapter(adapter);
+
+        listView.requestFocus();
     }
 
     @Override

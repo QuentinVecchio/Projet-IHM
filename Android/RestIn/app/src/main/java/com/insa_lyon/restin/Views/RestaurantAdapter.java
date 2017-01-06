@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,19 +16,20 @@ import com.insa_lyon.restin.R;
  * Created by quentinvecchio on 03/01/2017.
  */
 
-public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+public class RestaurantAdapter extends BaseAdapter {
+
+    private Context context;
 
     private LayoutInflater layoutInflater;
 
     private List<Restaurant> restaurants = null;
 
     public RestaurantAdapter(Context context, List<Restaurant> restaurants) {
-        super(context, 0, restaurants);
+        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.restaurants = restaurants;
     }
 
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LinearLayout layoutItem;
@@ -45,7 +46,27 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         TextView waitingTimeTextView = (TextView)layoutItem.findViewById(R.id.waitingTimeTextView);
         TextView distanceTextView = (TextView)layoutItem.findViewById(R.id.distanceTextView);
 
+        Restaurant restaurant = restaurants.get(position);
 
-        return convertView;
+        nameTextView.setText(restaurant.getName());
+        waitingTimeTextView.setText("Attente : ???min");
+        distanceTextView.setText("???m");
+
+        return layoutItem;
+    }
+
+    @Override
+    public int getCount() {
+        return restaurants.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return restaurants.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

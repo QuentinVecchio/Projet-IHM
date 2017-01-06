@@ -66,6 +66,9 @@ public class Restaurant {
 
     public double getMoyenneNote() {
         double sum = 0;
+        if(avis.size() == 0) {
+            return 0;
+        }
         for (Avis a: avis) {
             sum += a.getNote();
         }

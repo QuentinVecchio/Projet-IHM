@@ -1,6 +1,7 @@
 package com.insa_lyon.restin.Modeles;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by quentinvecchio on 03/01/2017.
@@ -10,9 +11,7 @@ public class DataSingleton {
     private static DataSingleton instance = null;
 
     private DataSingleton() {
-        if(instance == null) {
-            instance = new DataSingleton();
-        }
+
     }
 
     public static DataSingleton getInstance() {
@@ -22,7 +21,7 @@ public class DataSingleton {
         return instance;
     }
 
-    public static ArrayList<Restaurant> getRestaurants() {
+    public List<Restaurant> getRestaurants() {
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         //Restaurant RU Jussieu
         ArrayList<Avis> avisRUJussieu = new ArrayList<Avis>();
