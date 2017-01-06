@@ -11,12 +11,18 @@ public class Restaurant {
     private double lat;
     private double lon;
     private ArrayList<Avis> avis;
+    private MenuMatin menuMatin;
+    private Menu menuMidi;
+    private Menu menuSoir;
 
-    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis) {
-        this.avis = avis;
+    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis, MenuMatin menuMatin, Menu menuMidi, Menu menuSoir) {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
+        this.avis = avis;
+        this.menuMatin = menuMatin;
+        this.menuMidi = menuMidi;
+        this.menuSoir = menuSoir;
     }
 
     public String getName() {
@@ -50,6 +56,13 @@ public class Restaurant {
     public void setAvis(ArrayList<Avis> avis) {
         this.avis = avis;
     }
+
+    public MenuMatin getMenuMatin() { return menuMatin; }
+    public void setMenuMatin(MenuMatin menuMatin) { this.menuMatin = menuMatin; }
+    public Menu getMenuMidi() { return menuMidi; }
+    public void setMenuMidi(Menu menuMidi) { this.menuMidi = menuMidi; }
+    public Menu getMenuSoir() { return menuSoir; }
+    public void setMenuSoir(Menu menuSoir) { this.menuSoir = menuSoir; }
 
     public double getMoyenneNote() {
         double sum = 0;
