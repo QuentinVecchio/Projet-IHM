@@ -47,6 +47,7 @@ public class MapActivity extends AppCompatActivity {
         listView.requestFocus();
 
         bottomSheet = (LinearLayout)findViewById(R.id.bottomSheet);
+        bottomSheet.setOnClickListener(null);
 
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -74,6 +75,12 @@ public class MapActivity extends AppCompatActivity {
         });
 
         searchView.setFilterTouchesWhenObscured(true);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.setIconified(false);
+            }
+        });
     }
 
     @Override
