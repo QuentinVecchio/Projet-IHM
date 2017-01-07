@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="60dp" >
+
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+        android:layout_margin="10dp">
+
+    <EditText
+    android:layout_width="308dp"
+    android:layout_height="wrap_content"
+    android:inputType="textPersonName"
+    android:text="Search"
+    android:ems="10"
+    android:id="@+id/searchEditText" />
+
+    <Button
+    android:text="F"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/filtreButton" />
+    </LinearLayout>
+
+    <ListView
+    android:layout_width="match_parent"
+    android:layout_height="162dp"
+    android:id="@+id/restaurantListView"
+    android:layout_weight="0.12" />
+
+</LinearLayout>

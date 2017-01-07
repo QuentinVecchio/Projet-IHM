@@ -1,10 +1,16 @@
 package com.insa_lyon.restin.Views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.MapView;
@@ -13,11 +19,17 @@ import com.insa_lyon.restin.R;
 
 
 public class MapActivity extends AppCompatActivity {
-    MapView mapView;
+
+    private LinearLayout bottomSheet;
+
+    private MapView mapView;
+
     //GoogleMap map;
-    ListView listView;
-    EditText searchEditText;
-    Button filterButton;
+    private ListView listView;
+
+    private EditText searchEditText;
+
+    private Button filterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,25 @@ public class MapActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.requestFocus();
+
+        bottomSheet = (LinearLayout)findViewById(R.id.bottomSheet);
+
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+
+        bottomSheetBehavior.setHideable(false);
     }
 
     @Override
@@ -62,4 +93,7 @@ public class MapActivity extends AppCompatActivity {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
+
+
 }
