@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RestIn</string>
+    <string name="app_name">Rest\'In</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyCrRdxWk82ieR8U-oRXHOsxHnHXau4uGTg
     </string>
