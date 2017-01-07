@@ -10,26 +10,36 @@ import java.util.List;
 public class DataSingleton {
     private static DataSingleton instance = null;
 
-    private DataSingleton() {
+    private ArrayList<Restaurant> restaurants = null;
 
+    private DataSingleton() {
+        this.initData();
     }
 
     public static DataSingleton getInstance() {
-        if(instance == null) {
-            instance = new DataSingleton();
+        if(DataSingleton.instance == null) {
+            DataSingleton.instance = new DataSingleton();
         }
-        return instance;
+        return DataSingleton.instance;
     }
 
     public List<Restaurant> getRestaurants() {
-        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        return this.restaurants;
+    }
+
+    public Restaurant getRestaurant(int position) {
+        return this.restaurants.get(position);
+    }
+
+    private void initData() {
+        this.restaurants = new ArrayList<>();
         //Restaurant RU Jussieu
-        ArrayList<Avis> avisRUJussieu = new ArrayList<Avis>();
+        ArrayList<Avis> avisRUJussieu = new ArrayList<>();
 
         //Menu RU Jussieu
-        ArrayList<String> entreeJussieu = new ArrayList<String>();
-        ArrayList<String> platJussieu = new ArrayList<String>();
-        ArrayList<String> dessertJussieu = new ArrayList<String>();
+        ArrayList<String> entreeJussieu = new ArrayList<>();
+        ArrayList<String> platJussieu = new ArrayList<>();
+        ArrayList<String> dessertJussieu = new ArrayList<>();
         entreeJussieu.add("Salade Lyonnaise");
         entreeJussieu.add("Macédoine");
         platJussieu.add("Hamburger du chef");
@@ -41,16 +51,16 @@ public class DataSingleton {
         Menu menuMidiJussieu = new Menu(entreeJussieu, platJussieu, dessertJussieu);
 
         Restaurant ruJussieu = new Restaurant("RU Jussieu", 45.780691, 4.876519, avisRUJussieu, null, menuMidiJussieu, null);
-        restaurants.add(ruJussieu);
+        this.restaurants.add(ruJussieu);
 
         //Restaurant l'olivier
-        ArrayList<Avis> avisOlivier = new ArrayList<Avis>();
+        ArrayList<Avis> avisOlivier = new ArrayList<>();
 
-        ArrayList<String> entreeOlivier = new ArrayList<String>();
-        ArrayList<String> platOlivier = new ArrayList<String>();
-        ArrayList<String> dessertOlivier = new ArrayList<String>();
-        ArrayList<String> produitOlivier = new ArrayList<String>();
-        ArrayList<String> boissonOlivier = new ArrayList<String>();
+        ArrayList<String> entreeOlivier = new ArrayList<>();
+        ArrayList<String> platOlivier = new ArrayList<>();
+        ArrayList<String> dessertOlivier = new ArrayList<>();
+        ArrayList<String> produitOlivier = new ArrayList<>();
+        ArrayList<String> boissonOlivier = new ArrayList<>();
 
         entreeOlivier.add("Salade");
         entreeOlivier.add("Charcuterie");
@@ -70,16 +80,16 @@ public class DataSingleton {
 
 
         Restaurant olivier = new Restaurant("L'olivier", 45.784221, 4.874811, avisOlivier, menuMatinOlivier, menuMidiOlivier, null);
-        restaurants.add(olivier);
+        this.restaurants.add(olivier);
 
         //Restaurant le Prevert
-        ArrayList<Avis> avisPrevert = new ArrayList<Avis>();
+        ArrayList<Avis> avisPrevert = new ArrayList<>();
 
-        ArrayList<String> entreePrevert = new ArrayList<String>();
-        ArrayList<String> platPrevert = new ArrayList<String>();
-        ArrayList<String> dessertPrevert = new ArrayList<String>();
-        ArrayList<String> produitPrevert = new ArrayList<String>();
-        ArrayList<String> boissonPrevert = new ArrayList<String>();
+        ArrayList<String> entreePrevert = new ArrayList<>();
+        ArrayList<String> platPrevert = new ArrayList<>();
+        ArrayList<String> dessertPrevert = new ArrayList<>();
+        ArrayList<String> produitPrevert = new ArrayList<>();
+        ArrayList<String> boissonPrevert = new ArrayList<>();
 
         entreePrevert.add("Saucisson");
         entreePrevert.add("Carottes râpées");
@@ -98,14 +108,14 @@ public class DataSingleton {
         MenuMatin menuMatinPrevert = new MenuMatin(produitPrevert,boissonPrevert);
 
         Restaurant prevert = new Restaurant("Le Prevert", 45.781173, 4.873638, avisPrevert, menuMatinPrevert, null, menuSoirPrevert);
-        restaurants.add(prevert);
+        this.restaurants.add(prevert);
 
         //Restaurant le grillon
-        ArrayList<Avis> avisGrillon = new ArrayList<Avis>();
+        ArrayList<Avis> avisGrillon = new ArrayList<>();
 
-        ArrayList<String> entreeGrillon = new ArrayList<String>();
-        ArrayList<String> platGrillon = new ArrayList<String>();
-        ArrayList<String> dessertGrillon = new ArrayList<String>();
+        ArrayList<String> entreeGrillon = new ArrayList<>();
+        ArrayList<String> platGrillon = new ArrayList<>();
+        ArrayList<String> dessertGrillon = new ArrayList<>();
 
         entreeGrillon.add("Lentilles");
         entreeGrillon.add("Céleri");
@@ -116,9 +126,9 @@ public class DataSingleton {
 
         Menu menuMidiGrillon = new Menu(entreeGrillon,platGrillon,dessertGrillon);
 
-        ArrayList<String> entreeSoirGrillon = new ArrayList<String>();
-        ArrayList<String> platSoirGrillon = new ArrayList<String>();
-        ArrayList<String> dessertSoirGrillon = new ArrayList<String>();
+        ArrayList<String> entreeSoirGrillon = new ArrayList<>();
+        ArrayList<String> platSoirGrillon = new ArrayList<>();
+        ArrayList<String> dessertSoirGrillon = new ArrayList<>();
 
         entreeSoirGrillon.add("Friand");
         platSoirGrillon.add("Cassoulet");
@@ -127,8 +137,8 @@ public class DataSingleton {
         Menu menuSoirGrillon = new Menu(entreeSoirGrillon,platSoirGrillon,dessertSoirGrillon);
 
 
-        ArrayList<String> produitGrillon = new ArrayList<String>();
-        ArrayList<String> boissonGrillon = new ArrayList<String>();
+        ArrayList<String> produitGrillon = new ArrayList<>();
+        ArrayList<String> boissonGrillon = new ArrayList<>();
 
         produitGrillon.add("Croissant");
         produitGrillon.add("Brioche");
@@ -138,14 +148,14 @@ public class DataSingleton {
         MenuMatin menuMatinGrillon = new MenuMatin(produitGrillon,boissonGrillon);
 
         Restaurant grillon = new Restaurant("Le Grillon", 45.783927, 4.875049, avisGrillon, menuMatinGrillon, menuMidiGrillon, menuSoirGrillon);
-        restaurants.add(grillon);
+        this.restaurants.add(grillon);
 
         //Restaurant la Roulotte dorée
-        ArrayList<Avis> avisRoulotteDoree = new ArrayList<Avis>();
+        ArrayList<Avis> avisRoulotteDoree = new ArrayList<>();
 
-        ArrayList<String> entreeRoulotte = new ArrayList<String>();
-        ArrayList<String> platRoulotte = new ArrayList<String>();
-        ArrayList<String> dessertRoulotte = new ArrayList<String>();
+        ArrayList<String> entreeRoulotte = new ArrayList<>();
+        ArrayList<String> platRoulotte = new ArrayList<>();
+        ArrayList<String> dessertRoulotte = new ArrayList<>();
 
         entreeRoulotte.add("Salade d'endive");
         entreeRoulotte.add("Foie gras");
@@ -158,14 +168,14 @@ public class DataSingleton {
         Menu menuSoirRoulotte = new Menu(entreeRoulotte,platRoulotte,dessertRoulotte);
 
         Restaurant roulotteDoree = new Restaurant("La Roulotte Dorée", 45.782565, 4.876553, avisRoulotteDoree, null, null, menuSoirRoulotte);
-        restaurants.add(roulotteDoree);
+        this.restaurants.add(roulotteDoree);
 
         //Restaurant Ali Baba Kebab
-        ArrayList<Avis> avisNinkasi = new ArrayList<Avis>();
+        ArrayList<Avis> avisNinkasi = new ArrayList<>();
 
 
-        ArrayList<String> platKebab = new ArrayList<String>();
-        ArrayList<String> dessertKebab = new ArrayList<String>();
+        ArrayList<String> platKebab = new ArrayList<>();
+        ArrayList<String> dessertKebab = new ArrayList<>();
 
         platKebab.add("Chiche kebab");
         platKebab.add("Chiche taouk");
@@ -174,8 +184,8 @@ public class DataSingleton {
 
         Menu menuMidiKebab = new Menu(null,platKebab,dessertKebab);
 
-        ArrayList<String> platSoirKebab = new ArrayList<String>();
-        ArrayList<String> dessertSoirKebab = new ArrayList<String>();
+        ArrayList<String> platSoirKebab = new ArrayList<>();
+        ArrayList<String> dessertSoirKebab = new ArrayList<>();
 
         platSoirKebab.add("Chiche kebab");
         platSoirKebab.add("Americano");
@@ -185,8 +195,6 @@ public class DataSingleton {
         Menu menuSoirKebab = new Menu(null,platSoirKebab,dessertSoirKebab);
 
         Restaurant ninkasi = new Restaurant("Ninkasi", 45.778878, 4.872942, avisNinkasi, null, menuMidiKebab, menuSoirKebab);
-        restaurants.add(ninkasi);
-
-        return restaurants;
+        this.restaurants.add(ninkasi);
     }
 }

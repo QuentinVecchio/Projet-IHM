@@ -32,7 +32,8 @@
             android:stepSize="0.1"
             android:isIndicator="true"
             style="?android:attr/ratingBarStyleSmall"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp" />
 
     </LinearLayout>
 
@@ -73,7 +74,8 @@
             android:id="@+id/opinionNumberTextView"
             android:layout_weight="1"
             android:textAlignment="textEnd"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 
 </LinearLayout>

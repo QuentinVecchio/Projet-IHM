@@ -1,18 +1,16 @@
 package com.insa_lyon.restin.Views;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import com.google.android.gms.maps.MapView;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.R;
@@ -35,9 +33,6 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        //MapView
-        mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
 
         //SearchBar
         searchEditText = (EditText) findViewById(R.id.searchEditText);
@@ -63,6 +58,19 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
+        //MapView
+        mapView = (MapView) findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(MapActivity.this, RestaurantActivity.class);
+                intent.putExtra("restaurantIndex",position);
+                MapActivity.this.startActivity(intent);
+
+            }
+        });
     }
 
     @Override

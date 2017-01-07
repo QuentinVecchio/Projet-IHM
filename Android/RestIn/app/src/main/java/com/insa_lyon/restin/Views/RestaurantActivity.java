@@ -15,10 +15,20 @@ import java.util.List;
 
 public class RestaurantActivity extends AppCompatActivity {
 
+    private Restaurant restaurant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
+
+        int position = this.getIntent().getIntExtra("restaurantIndex",-1);
+        if(position != -1) {
+            this.restaurant = DataSingleton.getInstance().getRestaurant(position);
+        } else {
+            this.restaurant = null;
+        }
+
         showMenu();
     }
 
