@@ -3,6 +3,7 @@ package com.insa_lyon.restin.Views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,16 +22,30 @@ public class RestaurantActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         int position = this.getIntent().getIntExtra("restaurantIndex",-1);
         if(position != -1) {
             this.restaurant = DataSingleton.getInstance().getRestaurant(position);
+            this.getSupportActionBar().setTitle(this.restaurant.getName());
         } else {
             this.restaurant = null;
         }
 
         showMenu();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     private void showMenu() {
         List<Restaurant> rest = DataSingleton.getInstance().getRestaurants();
