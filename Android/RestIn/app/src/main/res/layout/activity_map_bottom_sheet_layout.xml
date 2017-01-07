@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="300dp"
     android:orientation="vertical"
-    android:background="#FFFFFF"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="60dp" >
+    app:behavior_peekHeight="70dp" >
 
     <LinearLayout
     android:orientation="horizontal"
@@ -16,25 +16,28 @@
     android:layout_height="50dp"
         android:layout_margin="10dp">
 
-    <EditText
-    android:layout_width="308dp"
-    android:layout_height="wrap_content"
-    android:inputType="textPersonName"
-    android:text="Search"
-    android:ems="10"
-    android:id="@+id/searchEditText" />
+        <SearchView
+            android:layout_width="279dp"
+            android:layout_height="match_parent"
+            android:id="@+id/searchView"
+            android:background="@android:color/white">
 
-    <Button
+        </SearchView>
+
+        <Button
     android:text="F"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/filtreButton" />
+    android:id="@+id/filtreButton"
+            android:layout_weight="1" />
+
     </LinearLayout>
 
     <ListView
     android:layout_width="match_parent"
     android:layout_height="162dp"
     android:id="@+id/restaurantListView"
-    android:layout_weight="0.12" />
+    android:layout_weight="0.12"
+        android:background="@android:color/white" />
 
 </LinearLayout>

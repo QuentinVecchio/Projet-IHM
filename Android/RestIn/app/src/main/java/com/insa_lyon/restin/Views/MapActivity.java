@@ -8,9 +8,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
+
 import com.google.android.gms.maps.MapView;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.R;
@@ -25,7 +26,7 @@ public class MapActivity extends AppCompatActivity {
     //GoogleMap map;
     private ListView listView;
 
-    private EditText searchEditText;
+    private SearchView searchView;
 
     private Button filterButton;
 
@@ -35,7 +36,7 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
 
         //SearchBar
-        searchEditText = (EditText) findViewById(R.id.searchEditText);
+        searchView = (SearchView) findViewById(R.id.searchView);
         filterButton = (Button) findViewById(R.id.filtreButton);
 
         //ListView
@@ -71,6 +72,8 @@ public class MapActivity extends AppCompatActivity {
 
             }
         });
+
+        searchView.setFilterTouchesWhenObscured(true);
     }
 
     @Override
