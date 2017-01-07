@@ -3,4 +3,5 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyCrRdxWk82ieR8U-oRXHOsxHnHXau4uGTg
     </string>
+    <string name="filters">Filtres</string>
 </resources>

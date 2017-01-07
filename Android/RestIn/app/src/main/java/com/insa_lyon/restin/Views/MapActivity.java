@@ -37,7 +37,16 @@ public class MapActivity extends AppCompatActivity {
 
         //SearchBar
         searchView = (SearchView) findViewById(R.id.searchView);
+
+        //FilterButton
         filterButton = (Button) findViewById(R.id.filtreButton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapActivity.this, FilterActivity.class);
+                MapActivity.this.startActivity(intent);
+            }
+        });
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
