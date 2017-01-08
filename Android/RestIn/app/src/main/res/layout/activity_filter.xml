@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_filter"
     android:layout_width="match_parent"
@@ -9,5 +10,85 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.insa_lyon.restin.Views.FilterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:text="@string/prix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            tools:text="Prix moyen en euros" />
+
+        <org.florescu.android.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:absoluteMaxValue="20"
+            app:absoluteMinValue="0"
+            app:valuesAboveThumbs="true"
+            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+
+        <TextView
+            android:text="@string/tempsAttente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            tools:text="Temps d'attente en minutes" />
+
+        <org.florescu.android.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:absoluteMaxValue="200"
+            app:absoluteMinValue="1"
+            app:valuesAboveThumbs="true"
+            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+
+        <TextView
+            android:text="@string/distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4" />
+
+        <org.florescu.android.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:absoluteMaxValue="5000"
+            app:absoluteMinValue="0"
+            app:valuesAboveThumbs="true"
+            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+
+        <TextView
+            android:text="@string/qualite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar2"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="3"
+            android:isIndicator="true" />
+
+        <TextView
+            android:text="@string/trier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:entries="@array/sortChoices" />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -4,4 +4,9 @@
         AIzaSyCrRdxWk82ieR8U-oRXHOsxHnHXau4uGTg
     </string>
     <string name="filters">Filtres</string>
+    <string name="trier">Trier par</string>
+    <string name="qualite">Qualité minimum</string>
+    <string name="distance">Distance en mètre</string>
+    <string name="tempsAttente">Temps d\'attente en minutes</string>
+    <string name="prix">Prix moyen en euros</string>
 </resources>

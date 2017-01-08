@@ -28,5 +28,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services-maps:+'
     compile 'com.android.support:design:25.1.0'
+    compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
 
 }

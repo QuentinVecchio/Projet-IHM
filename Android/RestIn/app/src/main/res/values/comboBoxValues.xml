@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sortChoices">
+        <item>Prix moyen</item>
+        <item>Temps d\'attente</item>
+        <item>Distance</item>
+        <item>Qualité</item>
+    </string-array>
+</resources>
