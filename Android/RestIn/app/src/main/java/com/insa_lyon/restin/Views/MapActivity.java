@@ -1,11 +1,17 @@
 package com.insa_lyon.restin.Views;
 
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -22,8 +28,7 @@ public class MapActivity extends AppCompatActivity {
     private LinearLayout bottomSheet;
 
     private MapView mapView;
-
-    //GoogleMap map;
+    
     private ListView listView;
 
     private SearchView searchView;
@@ -58,8 +63,39 @@ public class MapActivity extends AppCompatActivity {
         bottomSheet = (LinearLayout)findViewById(R.id.bottomSheet);
         bottomSheet.setOnClickListener(null);
 
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                float visibleBottomSheetHeight = (bottomSheet.getHeight() - bottomSheetBehavior.getPeekHeight()) * slideOffset+bottomSheetBehavior.getPeekHeight();
+
+                //MapViewLayoutParams
+                LinearLayout layout = (LinearLayout)findViewById(R.id.activityMapMainContent);
+                android.view.ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+
+                //ScreenHeight
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int screenHeight = size.y;
+
+                //StatusBarHeight
+                Rect rectangle = new Rect();
+                Window window = getWindow();
+                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                int statusBarHeight = rectangle.top;
+
+                //Updating MapViewLayoutHeight
+                layoutParams.height = screenHeight - ((int)Math.ceil(visibleBottomSheetHeight)) - getSupportActionBar().getHeight() - statusBarHeight;
+                layout.setLayoutParams(layoutParams);
+            }
+        });
 
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override

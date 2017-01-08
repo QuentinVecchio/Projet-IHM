@@ -6,9 +6,9 @@
     android:id="@+id/activityMapMainContent"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_map">
+    tools:showIn="@layout/activity_map"
+    android:layout_height="50dp">
 
     <com.google.android.gms.maps.MapView
         android:layout_width="match_parent"
