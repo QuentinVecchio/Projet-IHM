@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -184,8 +185,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng latLng = new LatLng(45.782951, 4.878269);
+        mMap.addMarker(new MarkerOptions().position(latLng).title("INSA Lyon"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        CameraUpdate center=
+                CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(14);
+
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
     }
 }
