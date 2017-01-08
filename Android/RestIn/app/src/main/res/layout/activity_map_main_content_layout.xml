@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activityMapMainContent"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_map"
-    android:layout_height="50dp">
 
-    <com.google.android.gms.maps.MapView
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/activityMapMainContent"
+android:orientation="vertical"
+android:layout_width="match_parent"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:showIn="@layout/activity_map"
+android:layout_height="50dp">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapView"
-        android:layout_weight="1.05" />
+        tools:context="com.insa_lyon.restin.Views.MapActivity" />
 </LinearLayout>

@@ -12,9 +12,9 @@
     app:behavior_peekHeight="70dp" >
 
     <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_margin="10dp">
 
         <SearchView
@@ -28,18 +28,18 @@
 
         <Button
             android:layout_width="38dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/filtreButton"
+            android:layout_height="wrap_content"
+            android:id="@+id/filtreButton"
             android:background="@mipmap/filter"
             android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 
     <ListView
-    android:layout_width="match_parent"
-    android:layout_height="162dp"
-    android:id="@+id/restaurantListView"
-    android:layout_weight="0.12"
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:id="@+id/restaurantListView"
+        android:layout_weight="0.12"
         android:background="@android:color/white" />
 
 </LinearLayout>

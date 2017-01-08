@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Rest\'In</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyCrRdxWk82ieR8U-oRXHOsxHnHXau4uGTg
-    </string>
     <string name="filters">Filtres</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

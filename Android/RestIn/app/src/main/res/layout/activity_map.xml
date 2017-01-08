@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.insa_lyon.restin.Views.MapActivity" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.insa_lyon.restin.Views.MapActivity" >
 
-    <!-- Contenido Principal -->
-<include layout="@layout/activity_map_main_content_layout" />
+    <!-- Main Content -->
+    <include layout="@layout/activity_map_main_content_layout" />
 
-<!-- Bottom Sheet -->
-<include layout="@layout/activity_map_bottom_sheet_layout" />
+    <!-- Bottom Sheet -->
+    <include layout="@layout/activity_map_bottom_sheet_layout" />
 
 </android.support.design.widget.CoordinatorLayout>
