@@ -24,13 +24,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.insa_lyon.restin.Modeles.DataSingleton;
+import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
 
     private LinearLayout bottomSheet;
 
@@ -39,6 +44,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private SearchView searchView;
 
     private Button filterButton;
+
+    private Map<Marker,Restaurant> mapMarkersRestaurants = new HashMap<>();
+
+    private Map<Restaurant,Marker> mapRestaurantsMarkers = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +73,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
-        RestaurantAdapter adapter = new RestaurantAdapter(this, DataSingleton.getInstance().getRestaurants());
+        final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, DataSingleton.getInstance().getRestaurants());
         listView.setAdapter(adapter);
 
         listView.requestFocus();
@@ -120,10 +129,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(MapActivity.this, RestaurantActivity.class);
-                intent.putExtra("restaurantIndex",position);
-                MapActivity.this.startActivity(intent);
-
+                Restaurant restaurant = (Restaurant)adapter.getItem(position);
+                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
+                googleMap.moveCamera(center);
+                mapRestaurantsMarkers.get(restaurant).showInfoWindow();
             }
         });
 
@@ -182,17 +191,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        this.googleMap = googleMap;
+        googleMap.setInfoWindowAdapter(new RestaurantInfoWindowAdapter(this));
 
-        // Add a marker in Sydney and move the camera
+        //Insa Lyon
         LatLng latLng = new LatLng(45.782951, 4.878269);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("INSA Lyon"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        CameraUpdate center=
-                CameraUpdateFactory.newLatLng(latLng);
-        CameraUpdate zoom=CameraUpdateFactory.zoomTo(14);
 
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+
+        googleMap.moveCamera(center);
+        googleMap.animateCamera(zoom);
+
+        for(Restaurant restaurant : DataSingleton.getInstance().getRestaurants()) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(restaurant.getLat(),restaurant.getLon()));
+            markerOptions.title(restaurant.getName());
+
+            Marker marker = googleMap.addMarker(markerOptions);
+            mapMarkersRestaurants.put(marker,restaurant);
+            mapRestaurantsMarkers.put(restaurant,marker);
+        }
+
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MapActivity.this, RestaurantActivity.class);
+                intent.putExtra("restaurantIndex",DataSingleton.getInstance().getRestaurantPosition(mapMarkersRestaurants.get(marker)));
+                MapActivity.this.startActivity(intent);
+            }
+        });
+    }
+
+    public Map<Marker, Restaurant> getMapMarkersRestaurants() {
+        return mapMarkersRestaurants;
     }
 }

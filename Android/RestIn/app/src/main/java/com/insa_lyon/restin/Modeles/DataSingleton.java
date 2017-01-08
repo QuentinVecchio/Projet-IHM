@@ -31,6 +31,15 @@ public class DataSingleton {
         return this.restaurants.get(position);
     }
 
+    public int getRestaurantPosition(Restaurant restaurant) {
+        for(int i = 0; i < this.restaurants.size(); i++) {
+            if(restaurants.get(i).equals(restaurant)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private void initData() {
         this.restaurants = new ArrayList<>();
         //Restaurant RU Jussieu

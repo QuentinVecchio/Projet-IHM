@@ -17,7 +17,7 @@ import com.insa_lyon.restin.R;
  * Created by quentinvecchio on 03/01/2017.
  */
 
-public class RestaurantAdapter extends BaseAdapter {
+public class RestaurantListViewAdapter extends BaseAdapter {
 
     private Context context;
 
@@ -25,7 +25,7 @@ public class RestaurantAdapter extends BaseAdapter {
 
     private List<Restaurant> restaurants = null;
 
-    public RestaurantAdapter(Context context, List<Restaurant> restaurants) {
+    public RestaurantListViewAdapter(Context context, List<Restaurant> restaurants) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.restaurants = restaurants;
@@ -38,7 +38,7 @@ public class RestaurantAdapter extends BaseAdapter {
         //(1) : Réutilisation des layouts
         if (convertView == null) {
             //Initialisation de notre item à partir du  layout XML "information_layout.xml"
-            layoutItem = (LinearLayout) layoutInflater.inflate(R.layout.restaurant_layout, parent, false);
+            layoutItem = (LinearLayout) layoutInflater.inflate(R.layout.restaurant_list_view_layout, parent, false);
         } else {
             layoutItem = (LinearLayout) convertView;
         }
@@ -48,15 +48,16 @@ public class RestaurantAdapter extends BaseAdapter {
         TextView distanceTextView = (TextView)layoutItem.findViewById(R.id.distanceTextView);
         TextView opinionNumberTextView = (TextView)layoutItem.findViewById(R.id.opinionNumberTextView);
         RatingBar ratingBar = (RatingBar)layoutItem.findViewById(R.id.ratingBar);
-        ratingBar.setRating(3);
+
 
 
         Restaurant restaurant = restaurants.get(position);
 
         nameTextView.setText(restaurant.getName());
-        waitingTimeTextView.setText("Attente : 0 min");
-        distanceTextView.setText("0 m");
-        opinionNumberTextView.setText("0 avis");
+        waitingTimeTextView.setText("Attente : 2 min");
+        distanceTextView.setText("150 m");
+        opinionNumberTextView.setText(restaurant.getAvis().size() + " avis");
+        ratingBar.setRating((float)restaurant.getMoyenneNote());
 
         return layoutItem;
     }
