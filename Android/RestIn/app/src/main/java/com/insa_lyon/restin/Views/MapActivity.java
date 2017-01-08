@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -102,6 +103,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 layoutParams.height = screenHeight - ((int)Math.ceil(visibleBottomSheetHeight)) - getSupportActionBar().getHeight() - statusBarHeight;
                 layout.setLayoutParams(layoutParams);
             }
+
+
         });
 
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -128,6 +131,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 searchView.setIconified(false);
+            }
+        });
+
+        //Initialize the map size
+        ViewGroup contentView = (ViewGroup)getWindow().getDecorView();
+        contentView.post(new Runnable() {
+            public void run() {
+                //MapViewLayoutParams
+                LinearLayout layout = (LinearLayout)findViewById(R.id.activityMapMainContent);
+                android.view.ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+
+                //ScreenHeight
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int screenHeight = size.y;
+
+                //StatusBarHeight
+                Rect rectangle = new Rect();
+                Window window = getWindow();
+                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                int statusBarHeight = rectangle.top;
+
+                switch (bottomSheetBehavior.getState()) {
+                    case BottomSheetBehavior.STATE_EXPANDED :
+                        layoutParams.height = screenHeight - bottomSheet.getHeight() - statusBarHeight - getSupportActionBar().getHeight();
+                        layout.setLayoutParams(layoutParams);
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED :
+                        layoutParams.height = screenHeight - bottomSheetBehavior.getPeekHeight() - statusBarHeight - getSupportActionBar().getHeight();
+                        layout.setLayoutParams(layoutParams);
+                        break;
+                }
+
             }
         });
     }
