@@ -54,83 +54,248 @@
 
             </LinearLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:id="@+id/menuLayout">
 
-                <TextView
-                    android:text="Menu du midi"
+                <android.support.design.widget.TabLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/title"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="24sp"
-                    android:paddingBottom="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/menuTab">
 
-                <TextView
-                    android:text="Entrées"
+
+                    <android.support.design.widget.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Midi"
+                        android:id="@+id/menuMidi"/>
+
+                    <android.support.design.widget.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soir"
+                        android:id="@+id/menuSoir"/>
+
+                    <android.support.design.widget.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Matin"
+                        android:id="@+id/menuMatin"/>
+
+                </android.support.design.widget.TabLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/entrance"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="fill_parent"
+                    android:layout_below="@id/menuTab"/>
 
-                <LinearLayout
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/entranceContainer"></LinearLayout>
+                    android:id="@+id/menuLayoutContainer">
 
-                <TextView
-                    android:text="Plats"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dish"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/menuLayoutError"/>
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dishContainer"></LinearLayout>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/menuLayoutMidi">
 
-                <TextView
-                    android:text="Desserts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dessert"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
+                        <TextView
+                            android:text="Menu du midi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/titleMidi"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="24sp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp" />
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dessertContainer"></LinearLayout>
+                        <TextView
+                            android:text="Entrées"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/entranceMidi"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dessert_entrance"></LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/entranceContainerMidi"></LinearLayout>
 
+                        <TextView
+                            android:text="Plats"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dishMidi"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
 
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dishContainerMidi"></LinearLayout>
+
+                        <TextView
+                            android:text="Desserts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dessertMidi"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dessertContainerMidi"></LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/menuLayoutSoir">
+
+                        <TextView
+                            android:text="Menu du soir"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/titleSoir"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="24sp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp" />
+
+                        <TextView
+                            android:text="Entrées"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/entranceSoir"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/entranceContainerSoir"></LinearLayout>
+
+                        <TextView
+                            android:text="Plats"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dishSoir"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dishContainerSoir"></LinearLayout>
+
+                        <TextView
+                            android:text="Desserts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dessertSoir"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/dessertContainerSoir"></LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/menuLayoutMatin">
+                        <TextView
+                            android:text="Menu du matin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/titleMatin"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="24sp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp" />
+
+                        <TextView
+                            android:text="Produits"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/product"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/productCont"></LinearLayout>
+
+                        <TextView
+                            android:text="Boissons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/drink"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/drinkContainer"></LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
-
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>
