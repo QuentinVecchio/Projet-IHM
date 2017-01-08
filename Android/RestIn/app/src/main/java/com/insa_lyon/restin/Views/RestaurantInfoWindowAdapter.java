@@ -1,13 +1,11 @@
 package com.insa_lyon.restin.Views;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.vision.text.Text;
 import com.insa_lyon.restin.R;
 
 
