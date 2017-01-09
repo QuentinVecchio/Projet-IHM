@@ -57,12 +57,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         getSupportActionBar().setTitle(R.string.app_name);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //SearchBar
-        searchView = (SearchView) findViewById(R.id.searchView);
 
         //FilterButton
         filterButton = (Button) findViewById(R.id.filtreButton);
@@ -79,8 +76,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, DataSingleton.getInstance().getRestaurants());
         listView.setAdapter(adapter);
 
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Restaurant restaurant = (Restaurant)adapter.getItem(position);
+                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
+                googleMap.moveCamera(center);
+                mapRestaurantsMarkers.get(restaurant).showInfoWindow();
+            }
+        });
+
         listView.requestFocus();
 
+        //BottomSheet
         bottomSheet = (LinearLayout)findViewById(R.id.bottomSheet);
         bottomSheet.setOnClickListener(null);
 
@@ -120,24 +136,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         });
 
-        listView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
 
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Restaurant restaurant = (Restaurant)adapter.getItem(position);
-                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
-                googleMap.moveCamera(center);
-                mapRestaurantsMarkers.get(restaurant).showInfoWindow();
-            }
-        });
+        //SearchBar
+        searchView = (SearchView) findViewById(R.id.searchView);
 
         searchView.setFilterTouchesWhenObscured(true);
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +218,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mapMarkersRestaurants.put(marker,restaurant);
             mapRestaurantsMarkers.put(restaurant,marker);
         }
+        listView.findViewById()
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
