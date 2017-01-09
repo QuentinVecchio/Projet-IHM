@@ -218,7 +218,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mapMarkersRestaurants.put(marker,restaurant);
             mapRestaurantsMarkers.put(restaurant,marker);
         }
-        listView.findViewById()
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
