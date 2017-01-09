@@ -27,7 +27,8 @@
             app:absoluteMaxValue="20"
             app:absoluteMinValue="0"
             app:valuesAboveThumbs="true"
-            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+            app:textAboveThumbsColor="@android:color/holo_red_dark"
+            android:id="@+id/price_filter" />
 
         <TextView
             android:text="@string/tempsAttente"
@@ -42,7 +43,8 @@
             app:absoluteMaxValue="200"
             app:absoluteMinValue="1"
             app:valuesAboveThumbs="true"
-            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+            app:textAboveThumbsColor="@android:color/holo_red_dark"
+            android:id="@+id/time_filter" />
 
         <TextView
             android:text="@string/distance"
@@ -56,7 +58,8 @@
             app:absoluteMaxValue="5000"
             app:absoluteMinValue="0"
             app:valuesAboveThumbs="true"
-            app:textAboveThumbsColor="@android:color/holo_red_dark" />
+            app:textAboveThumbsColor="@android:color/holo_red_dark"
+            android:id="@+id/distance_filter" />
 
         <TextView
             android:text="@string/qualite"
@@ -73,10 +76,10 @@
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingBar2"
+                android:id="@+id/ratingBar"
                 android:numStars="5"
                 android:stepSize="1"
-                android:rating="3"
+                android:rating="0"
                 android:clickable="false" />
         </LinearLayout>
 

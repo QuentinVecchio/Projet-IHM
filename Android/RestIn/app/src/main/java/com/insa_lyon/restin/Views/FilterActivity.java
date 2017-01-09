@@ -15,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,12 +27,23 @@ import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 
+import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import java.util.List;
+
+import static android.R.id.list;
+
 public class FilterActivity extends AppCompatActivity {
     private Button clickButton;
     private LinearLayout bottomSheet;
     private ScrollView items;
     private SearchView searchView;
     private ListView listView;
+    private RangeSeekBar price_bar;
+    private RangeSeekBar time_bar;
+    private RangeSeekBar distance_bar;
+    private RatingBar ratingBar;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +55,11 @@ public class FilterActivity extends AppCompatActivity {
         bottomSheet.setOnClickListener(null);
         items = (ScrollView) findViewById(R.id.scroll_filter);
         clickButton = (Button) findViewById(R.id.button2);
+        price_bar = (RangeSeekBar) findViewById(R.id.price_filter);
+        time_bar = (RangeSeekBar) findViewById(R.id.time_filter);
+        distance_bar = (RangeSeekBar) findViewById(R.id.distance_filter);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        spinner = (Spinner) findViewById(R.id.spinner);
         //SearchBar
         searchView = (SearchView) findViewById(R.id.search_filter);
         //ListView
@@ -56,6 +74,21 @@ public class FilterActivity extends AppCompatActivity {
                 /* action */
 
             }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                listView = (ListView) findViewById(R.id.restaurantListView);
+                List<Restaurant> restaurantList = DataSingleton.getInstance().getRestaurants();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this,restaurantList);
+                listView.setAdapter(adapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
