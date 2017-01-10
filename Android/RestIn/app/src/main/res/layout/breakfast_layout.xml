@@ -7,7 +7,7 @@
         android:text="Menu du matin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
+        android:id="@+id/titleMatin"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="24sp"
@@ -29,7 +29,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/productContainer"></LinearLayout>
+        android:id="@+id/productCont"></LinearLayout>
 
     <TextView
         android:text="Boissons"
@@ -45,7 +45,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/drinkCOntainer"></LinearLayout>
+        android:id="@+id/drinkContainer"></LinearLayout>
 
 
 </LinearLayout>
