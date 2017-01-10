@@ -33,6 +33,8 @@ import com.insa_lyon.restin.R;
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -272,6 +274,57 @@ public class FilterActivity extends AppCompatActivity {
             }
         }
         //on trie dans l'ordre demandé
+        switch (sortingBy) {
+            case "Prix moyen":
+            {
+                //on trie en fonction du prix asc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getPrixMoyen()<r2.getPrixMoyen()) {
+                            return -1;
+                        }
+                        if(r1.getPrixMoyen()>r2.getPrixMoyen()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                });
+                break;
+            }
+            case "Temps d'attente":
+            {
+
+                break;
+            }
+            case "Distance":
+            {
+
+                break;
+            }
+            case "Qualité":
+            {
+                //on trie en fonction de la qualité desc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getMoyenneNote()<r2.getMoyenneNote()) {
+                            return 1;
+                        }
+                        if(r1.getMoyenneNote()>r2.getMoyenneNote()) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                });
+                break;
+            }
+        }
+        for (int i =0;i<restaurantList.size(); i++) {
+            System.out.println("prix : "+restaurantList.get(i).getPrixMoyen());
+        }
         return restaurantList;
     }
 
