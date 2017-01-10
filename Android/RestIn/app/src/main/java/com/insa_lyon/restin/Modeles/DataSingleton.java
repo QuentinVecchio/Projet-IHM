@@ -159,8 +159,11 @@ public class DataSingleton {
         ArrayList<String> dessertSoirGrillon = new ArrayList<>();
 
         entreeSoirGrillon.add("Friand");
+        entreeSoirGrillon.add("Gazpacho à la citrouille");
+        platSoirGrillon.add("Blanquette de veau - riz");
         platSoirGrillon.add("Cassoulet");
         dessertSoirGrillon.add("Compote de pomme");
+        dessertSoirGrillon.add("Tarte au citron");
 
         Menu menuSoirGrillon = new Menu(entreeSoirGrillon,platSoirGrillon,dessertSoirGrillon);
 
