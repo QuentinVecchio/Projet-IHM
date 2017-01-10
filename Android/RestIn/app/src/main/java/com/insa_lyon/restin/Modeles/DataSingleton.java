@@ -44,6 +44,25 @@ public class DataSingleton {
         this.restaurants = new ArrayList<>();
         //Restaurant RU Jussieu
         ArrayList<Avis> avisRUJussieu = new ArrayList<>();
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+        avisRUJussieu.add(new Avis("MMMM", 4));
+        avisRUJussieu.add(new Avis("good", 3));
+
 
         //Menu RU Jussieu
         ArrayList<String> entreeJussieu = new ArrayList<>();

@@ -118,6 +118,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
                 mMap.moveCamera(center);
                 mapRestaurantsMarkers.get(restaurant).showInfoWindow();
+/*
+                Intent intent = new Intent(MapActivity.this, AvisActivity.class);
+                intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                MapActivity.this.startActivity(intent);*/
+
             }
         });
 
