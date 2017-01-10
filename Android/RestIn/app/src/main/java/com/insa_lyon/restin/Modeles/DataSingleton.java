@@ -23,7 +23,7 @@ public class DataSingleton {
         return DataSingleton.instance;
     }
 
-    public List<Restaurant> getRestaurants() {
+    public ArrayList<Restaurant> getRestaurants() {
         return this.restaurants;
     }
 
@@ -78,7 +78,7 @@ public class DataSingleton {
 
         Menu menuMidiJussieu = new Menu(entreeJussieu, platJussieu, dessertJussieu);
 
-        Restaurant ruJussieu = new Restaurant("RU Jussieu", 45.780691, 4.876519, avisRUJussieu, null, menuMidiJussieu, null);
+        Restaurant ruJussieu = new Restaurant("RU Jussieu", 45.780691, 4.876519, avisRUJussieu, null, menuMidiJussieu, null,3.30);
         this.restaurants.add(ruJussieu);
 
         //Restaurant l'olivier
@@ -107,7 +107,7 @@ public class DataSingleton {
         MenuMatin menuMatinOlivier = new MenuMatin(produitOlivier,boissonOlivier);
 
 
-        Restaurant olivier = new Restaurant("L'olivier", 45.784221, 4.874811, avisOlivier, menuMatinOlivier, menuMidiOlivier, null);
+        Restaurant olivier = new Restaurant("L'olivier", 45.784221, 4.874811, avisOlivier, menuMatinOlivier, menuMidiOlivier, null,4.0);
         this.restaurants.add(olivier);
 
         //Restaurant le Prevert
@@ -135,7 +135,7 @@ public class DataSingleton {
 
         MenuMatin menuMatinPrevert = new MenuMatin(produitPrevert,boissonPrevert);
 
-        Restaurant prevert = new Restaurant("Le Prevert", 45.781173, 4.873638, avisPrevert, menuMatinPrevert, null, menuSoirPrevert);
+        Restaurant prevert = new Restaurant("Le Prevert", 45.781173, 4.873638, avisPrevert, menuMatinPrevert, null, menuSoirPrevert,3.5);
         this.restaurants.add(prevert);
 
         //Restaurant le grillon
@@ -178,7 +178,7 @@ public class DataSingleton {
 
         MenuMatin menuMatinGrillon = new MenuMatin(produitGrillon,boissonGrillon);
 
-        Restaurant grillon = new Restaurant("Le Grillon", 45.783927, 4.875049, avisGrillon, menuMatinGrillon, menuMidiGrillon, menuSoirGrillon);
+        Restaurant grillon = new Restaurant("Le Grillon", 45.783927, 4.875049, avisGrillon, menuMatinGrillon, menuMidiGrillon, menuSoirGrillon,3.70);
         this.restaurants.add(grillon);
 
         //Restaurant la Roulotte dorée
@@ -198,7 +198,7 @@ public class DataSingleton {
 
         Menu menuSoirRoulotte = new Menu(entreeRoulotte,platRoulotte,dessertRoulotte);
 
-        Restaurant roulotteDoree = new Restaurant("La Roulotte Dorée", 45.782565, 4.876553, avisRoulotteDoree, null, null, menuSoirRoulotte);
+        Restaurant roulotteDoree = new Restaurant("La Roulotte Dorée", 45.782565, 4.876553, avisRoulotteDoree, null, null, menuSoirRoulotte,5.0);
         this.restaurants.add(roulotteDoree);
 
         //Restaurant Ali Baba Kebab
@@ -225,7 +225,7 @@ public class DataSingleton {
 
         Menu menuSoirKebab = new Menu(null,platSoirKebab,dessertSoirKebab);
 
-        Restaurant ninkasi = new Restaurant("Ninkasi", 45.778878, 4.872942, avisNinkasi, null, menuMidiKebab, menuSoirKebab);
+        Restaurant ninkasi = new Restaurant("Ninkasi", 45.778878, 4.872942, avisNinkasi, null, menuMidiKebab, menuSoirKebab,7.0);
         this.restaurants.add(ninkasi);
     }
 }
