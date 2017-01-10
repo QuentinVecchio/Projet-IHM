@@ -4,38 +4,52 @@ package com.insa_lyon.restin.Views;
  * Created by Pierre on 08/01/2017.
  */
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class MenuAdapter extends FragmentStatePagerAdapter {
-    int mNumOfTabs;
+import java.util.Vector;
 
-    public MenuAdapter(FragmentManager fm, int NumOfTabs) {
-        super(fm);
-        this.mNumOfTabs = NumOfTabs;
+public class MenuAdapter extends PagerAdapter {
+
+    private Context mContext;
+    private Vector<View> pages;
+    private Vector<String> titles;
+
+    public MenuAdapter(Context context, Vector<View> pages, Vector<String> titles) {
+        this.mContext = context;
+        this.pages = pages;
+        this.titles = titles;
     }
 
     @Override
-    public Fragment getItem(int position) {
-
-        switch (position) {
-            case 0:
-                MenuMidiFragment tab1 = new MenuMidiFragment();
-                return tab1;
-            case 1:
-                MenuSoirFragment tab2 = new MenuSoirFragment();
-                return tab2;
-            case 2:
-                MenuMatinFragment tab3 = new MenuMatinFragment();
-                return tab3;
-            default:
-                return null;
-        }
+    public Object instantiateItem(ViewGroup container, int position) {
+        View page = pages.get(position);
+        container.addView(page);
+        return page;
     }
 
     @Override
     public int getCount() {
-        return mNumOfTabs;
+        return pages.size();
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view.equals(object);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View) object);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
     }
 }
