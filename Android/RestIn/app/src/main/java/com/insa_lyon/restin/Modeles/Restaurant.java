@@ -14,6 +14,8 @@ public class Restaurant {
     private MenuMatin menuMatin;
     private Menu menuMidi;
     private Menu menuSoir;
+    private long distance;
+    private long duration;
 
     public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis, MenuMatin menuMatin, Menu menuMidi, Menu menuSoir) {
         this.name = name;
@@ -23,6 +25,8 @@ public class Restaurant {
         this.menuMatin = menuMatin;
         this.menuMidi = menuMidi;
         this.menuSoir = menuSoir;
+        this.distance = -1;
+        this.duration = -1;
     }
 
     public String getName() {
@@ -73,5 +77,37 @@ public class Restaurant {
             sum += a.getNote();
         }
         return sum/avis.size();
+    }
+
+    /**
+     * Getter of the distance from user position in Milimeter
+     * @return the distance in milimeter
+     */
+    public long getDistance() {
+        return distance;
+    }
+
+    /**
+     * Setter of the distance from user position in Milimeter
+     * @param distance : the distance in milimeter
+     */
+    public void setDistance(long distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * Getter of the travel duration from user position in seconde
+     * @return the travel duration in seconde
+     */
+    public long getDuration() {
+        return duration;
+    }
+
+    /**
+     * Setter of the travel duration from user position in seconde
+     * @param duration : the travel duration in seconde
+     */
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }

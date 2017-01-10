@@ -10,6 +10,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.insa_lyon.restin.Modeles.Restaurant;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import com.insa_lyon.restin.R;
 
@@ -54,8 +56,16 @@ public class RestaurantListViewAdapter extends BaseAdapter {
         Restaurant restaurant = restaurants.get(position);
 
         nameTextView.setText(restaurant.getName());
-        waitingTimeTextView.setText("Attente : 2 min");
-        distanceTextView.setText("150 m");
+        if(restaurant.getDuration() != -1) {
+            waitingTimeTextView.setText("Attente : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
+        } else {
+            waitingTimeTextView.setText("Attente : ?");
+        }
+        if(restaurant.getDuration() != -1) {
+            distanceTextView.setText("Distance : " +   new DecimalFormat("##.#").format(restaurant.getDistance()/1000.0) + " km");
+        } else {
+            distanceTextView.setText("Distance : ?");
+        }
         opinionNumberTextView.setText(restaurant.getAvis().size() + " avis");
         ratingBar.setRating((float)restaurant.getMoyenneNote());
 

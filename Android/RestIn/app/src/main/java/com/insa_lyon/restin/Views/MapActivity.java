@@ -13,6 +13,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.BaseAdapter;
 import android.widget.SearchView;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -44,6 +45,11 @@ import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 import com.insa_lyon.restin.Services.GoogleMapsDistanceMatrixRestClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -315,6 +321,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
+        this.calculDistanceAndTimeForRestaurants(latLng);
+
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -393,4 +401,36 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return mapMarkersRestaurants;
     }
 
+    private void calculDistanceAndTimeForRestaurants(LatLng origin) {
+        Vector<LatLng> destinationLatLngs = new Vector<>();
+        for(Restaurant restaurant : DataSingleton.getInstance().getRestaurants()) {
+            destinationLatLngs.add(new LatLng(restaurant.getLat(),restaurant.getLon()));
+        }
+
+        GoogleMapsDistanceMatrixRestClient.get(origin, destinationLatLngs, GoogleMapsDistanceMatrixRestClient.TransportMode.WALKING, getString(R.string.google_maps_key), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println(response.toString());
+                try {
+                    JSONArray rows = response.getJSONArray("rows");
+                    JSONArray elements = rows.getJSONObject(0).getJSONArray("elements");
+                    for(int i = 0; i < elements.length(); i++) {
+                        JSONObject element = elements.getJSONObject(i);
+                        JSONObject distance = element.getJSONObject("distance");
+                        JSONObject duration = element.getJSONObject("duration");
+                        DataSingleton.getInstance().getRestaurants().get(i).setDistance(distance.getLong("value"));
+                        DataSingleton.getInstance().getRestaurants().get(i).setDuration(duration.getLong("value"));
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                System.out.println("--FAILURE");
+            }
+        });
+    }
 }
