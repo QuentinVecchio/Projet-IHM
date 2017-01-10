@@ -7,7 +7,7 @@
         android:text="Menu du soir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
+        android:id="@+id/titleSoir"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="24sp"
@@ -19,7 +19,7 @@
         android:text="Entrées"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/entrance"
+        android:id="@+id/entranceSoir"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
@@ -29,13 +29,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/entranceContainer"></LinearLayout>
+        android:id="@+id/entranceContainerSoir"></LinearLayout>
 
     <TextView
         android:text="Plats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dish"
+        android:id="@+id/dishSoir"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
@@ -45,13 +45,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dishContainer"></LinearLayout>
+        android:id="@+id/dishContainerSoir"></LinearLayout>
 
     <TextView
         android:text="Desserts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dessert"
+        android:id="@+id/dessertSoir"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
@@ -61,6 +61,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dessertContainer"></LinearLayout>
+        android:id="@+id/dessertContainerSoir"></LinearLayout>
 
 </LinearLayout>

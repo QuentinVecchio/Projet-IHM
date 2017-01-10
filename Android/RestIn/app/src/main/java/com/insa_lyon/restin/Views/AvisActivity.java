@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -107,14 +108,49 @@ public class AvisActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Avis avis = new Avis(avisEditText.getText().toString(), (double) ratingBar.getRating());
-                restaurant.getAvis().add(avis);
+                restaurant.getAvis().add(0,avis);
                 ((BaseAdapter)avisListView.getAdapter()).notifyDataSetChanged();
                 avisEditText.setText("");
                 ratingBar.setRating(3);
+                avisListView.smoothScrollToPosition(0);
 
             }
         });
 
+
+        //Initialize the List size
+        ViewGroup contentView = (ViewGroup)getWindow().getDecorView();
+        contentView.post(new Runnable() {
+            public void run() {
+                //AvisViewLayoutParams
+                LinearLayout layout = (LinearLayout)findViewById(R.id.avisLinearLayout);
+                android.view.ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+
+                //ScreenHeight
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int screenHeight = size.y;
+
+                //StatusBarHeight
+                Rect rectangle = new Rect();
+                Window window = getWindow();
+                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                int statusBarHeight = rectangle.top;
+
+                switch (bottomSheetBehavior.getState()) {
+                    case BottomSheetBehavior.STATE_EXPANDED :
+                        layoutParams.height = screenHeight - bottomSheet.getHeight() - statusBarHeight - getSupportActionBar().getHeight();
+                        layout.setLayoutParams(layoutParams);
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED :
+                        layoutParams.height = screenHeight - bottomSheetBehavior.getPeekHeight() - statusBarHeight - getSupportActionBar().getHeight();
+                        layout.setLayoutParams(layoutParams);
+                        break;
+                }
+
+            }
+        });
     }
 
     @Override

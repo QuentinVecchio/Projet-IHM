@@ -22,11 +22,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true">
 
-            <com.google.android.gms.maps.MapView
-                android:layout_width="match_parent"
-                android:layout_height="231dp"
-                android:id="@+id/mapView" />
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -54,244 +49,54 @@
 
             </LinearLayout>
 
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scrollbarSize="0dp"
+                android:layout_gravity="center">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/menuLayout">
-
-                <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/menuTab">
+                    android:orientation="horizontal"
+                    android:id="@+id/buttonsLayout"
+                    android:gravity="center">
 
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Midi"
-                        android:id="@+id/menuMidi"/>
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Soir"
-                        android:id="@+id/menuSoir"/>
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <Button
                         android:text="Matin"
-                        android:id="@+id/menuMatin"/>
-
-                </android.support.design.widget.TabLayout>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_below="@id/menuTab"/>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/menuLayoutContainer">
-
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/menuLayoutError"/>
+                        android:id="@+id/matinButton"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
 
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
+                    <Button
+                        android:text="Midi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/menuLayoutMidi">
+                        android:id="@+id/midiButton"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
 
-                        <TextView
-                            android:text="Menu du midi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/titleMidi"
-                            android:textAppearance="@style/TextAppearance.AppCompat"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="24sp"
-                            android:paddingBottom="2dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp" />
-
-                        <TextView
-                            android:text="Entrées"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/entranceMidi"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/entranceContainerMidi"></LinearLayout>
-
-                        <TextView
-                            android:text="Plats"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dishMidi"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dishContainerMidi"></LinearLayout>
-
-                        <TextView
-                            android:text="Desserts"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dessertMidi"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dessertContainerMidi"></LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
+                    <Button
+                        android:text="Soir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/menuLayoutSoir">
+                        android:id="@+id/soirButton"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
 
-                        <TextView
-                            android:text="Menu du soir"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/titleSoir"
-                            android:textAppearance="@style/TextAppearance.AppCompat"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="24sp"
-                            android:paddingBottom="2dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp" />
-
-                        <TextView
-                            android:text="Entrées"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/entranceSoir"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/entranceContainerSoir"></LinearLayout>
-
-                        <TextView
-                            android:text="Plats"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dishSoir"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dishContainerSoir"></LinearLayout>
-
-                        <TextView
-                            android:text="Desserts"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dessertSoir"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dessertContainerSoir"></LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/menuLayoutMatin">
-                        <TextView
-                            android:text="Menu du matin"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/titleMatin"
-                            android:textAppearance="@style/TextAppearance.AppCompat"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="24sp"
-                            android:paddingBottom="2dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp" />
-
-                        <TextView
-                            android:text="Produits"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/product"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/productCont"></LinearLayout>
-
-                        <TextView
-                            android:text="Boissons"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/drink"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="18sp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp" />
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/drinkContainer"></LinearLayout>
-                    </LinearLayout>
+                    </Button>
                 </LinearLayout>
-            </LinearLayout>
+            </HorizontalScrollView>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPageMenu"
+                android:layout_height="400dp"
+                android:layout_width="match_parent"
+                ></android.support.v4.view.ViewPager>
 
 
         </LinearLayout>
