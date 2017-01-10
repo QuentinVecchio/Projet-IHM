@@ -10,12 +10,13 @@ public class Restaurant {
     private String name;
     private double lat;
     private double lon;
+    private double prixMoyen;
     private ArrayList<Avis> avis;
     private MenuMatin menuMatin;
     private Menu menuMidi;
     private Menu menuSoir;
 
-    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis, MenuMatin menuMatin, Menu menuMidi, Menu menuSoir) {
+    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis, MenuMatin menuMatin, Menu menuMidi, Menu menuSoir,double prix) {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
@@ -23,6 +24,7 @@ public class Restaurant {
         this.menuMatin = menuMatin;
         this.menuMidi = menuMidi;
         this.menuSoir = menuSoir;
+        this.prixMoyen = prix;
     }
 
     public String getName() {
@@ -53,6 +55,10 @@ public class Restaurant {
         return avis;
     }
 
+    public double getPrixMoyen() { return prixMoyen; }
+
+    public void setPrixMoyen(double prixMoyen) {this.prixMoyen = prixMoyen; }
+
     public void setAvis(ArrayList<Avis> avis) {
         this.avis = avis;
     }
@@ -67,7 +73,7 @@ public class Restaurant {
     public double getMoyenneNote() {
         double sum = 0;
         if(avis.size() == 0) {
-            return 0;
+            return sum;
         }
         for (Avis a: avis) {
             sum += a.getNote();
