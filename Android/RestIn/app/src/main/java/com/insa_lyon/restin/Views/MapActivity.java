@@ -1,6 +1,7 @@
 package com.insa_lyon.restin.Views;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -13,6 +14,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.SearchView;
 import android.view.Display;
@@ -51,7 +53,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -81,6 +85,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private Map<Restaurant,Marker> mapRestaurantsMarkers = new HashMap<>();
 
+    private RestaurantListViewAdapter restaurantListViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +112,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
-        final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, DataSingleton.getInstance().getRestaurants());
-        listView.setAdapter(adapter);
+        restaurantListViewAdapter = new RestaurantListViewAdapter(this, DataSingleton.getInstance().getRestaurants());
+        listView.setAdapter(restaurantListViewAdapter);
 
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -120,7 +126,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Restaurant restaurant = (Restaurant)adapter.getItem(position);
+                Restaurant restaurant = (Restaurant)restaurantListViewAdapter.getItem(position);
                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
                 mMap.moveCamera(center);
                 mapRestaurantsMarkers.get(restaurant).showInfoWindow();
@@ -183,6 +189,55 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 searchView.setIconified(false);
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<Restaurant> restaurants;
+                if(s.isEmpty()) {
+                    restaurants = DataSingleton.getInstance().getRestaurants();
+
+                } else {
+                    restaurants = new ArrayList<>();
+                    restaurants.addAll(DataSingleton.getInstance().getRestaurants());
+                    for(Restaurant restaurant : DataSingleton.getInstance().getRestaurants()) {
+                        if(!restaurant.getName().toLowerCase().contains(s.toLowerCase())) {
+                            restaurants.remove(restaurant);
+                        }
+                    }
+                }
+                restaurantListViewAdapter.setRestaurants(restaurants);
+                mMap.clear();
+                mapMarkersRestaurants.clear();
+                mapRestaurantsMarkers.clear();
+                for(Restaurant restaurant : restaurants) {
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(new LatLng(restaurant.getLat(),restaurant.getLon()));
+                    markerOptions.title(restaurant.getName());
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+                    Marker marker = mMap.addMarker(markerOptions);
+                    mapMarkersRestaurants.put(marker,restaurant);
+                    mapRestaurantsMarkers.put(restaurant,marker);
+                }
+                restaurantListViewAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromInputMethod(searchView.getWindowToken(), 0);
+                return false;
+            }
+        });
+        
 
         //Initialize the map size
         ViewGroup contentView = (ViewGroup)getWindow().getDecorView();
