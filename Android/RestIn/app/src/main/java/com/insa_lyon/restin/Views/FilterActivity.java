@@ -1,5 +1,6 @@
 package com.insa_lyon.restin.Views;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -54,6 +55,7 @@ public class FilterActivity extends AppCompatActivity {
     private double minRating;
     private String sortingBy;
     private String keyWords;
+    private RestaurantListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class FilterActivity extends AppCompatActivity {
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
         List<Restaurant> restaurantList = applySort();
-        final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, restaurantList);
+        adapter = new RestaurantListViewAdapter(this, restaurantList);
         listView.setAdapter(adapter);
         listView.requestFocus();
         clickButton.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +111,8 @@ public class FilterActivity extends AppCompatActivity {
                 ratingBar.setRating((float)minRating);
                 spinner.setSelection(0);
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
         });
         price_bar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
@@ -119,8 +121,8 @@ public class FilterActivity extends AppCompatActivity {
                 minPrice = ((Number) minValue).doubleValue();
                 maxPrice = ((Number) maxValue).doubleValue();
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
         });
 
@@ -130,8 +132,8 @@ public class FilterActivity extends AppCompatActivity {
                 minTime = ((Number) minValue).doubleValue();
                 maxTime = ((Number) maxValue).doubleValue();
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
         });
 
@@ -141,8 +143,8 @@ public class FilterActivity extends AppCompatActivity {
                 minDistance = ((Number) minValue).doubleValue();
                 maxDistance = ((Number) maxValue).doubleValue();
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,8 +152,8 @@ public class FilterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 sortingBy = spinner.getSelectedItem().toString();
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
 
             @Override
@@ -166,8 +168,8 @@ public class FilterActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 minRating = (double)rating;
                 List<Restaurant> restaurantList = applySort();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
-                listView.setAdapter(adapter2);
+                adapter = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter);
             }
         });
 
@@ -217,11 +219,11 @@ public class FilterActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                //on passe a la vue restaurant
-                /*Restaurant restaurant = (Restaurant)adapter.getItem(position);
-                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
-                googleMap.moveCamera(center);
-                mapRestaurantsMarkers.get(restaurant).showInfoWindow();*/
+                Restaurant restaurant = (Restaurant)adapter.getItem(position);
+
+                Intent intent = new Intent(FilterActivity.this, RestaurantActivity.class);
+                intent.putExtra("restaurantIndex",DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                FilterActivity.this.startActivity(intent);
             }
         });
 
@@ -383,4 +385,9 @@ public class FilterActivity extends AppCompatActivity {
         return restaurantList;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }
