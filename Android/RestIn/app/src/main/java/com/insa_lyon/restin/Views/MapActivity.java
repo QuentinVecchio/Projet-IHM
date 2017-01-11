@@ -273,6 +273,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restaurantListViewAdapter.notifyDataSetChanged();
+    }
 
     /**
      * Manipulates the map once available.
