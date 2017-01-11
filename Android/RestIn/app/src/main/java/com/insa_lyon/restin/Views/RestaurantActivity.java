@@ -1,18 +1,17 @@
 package com.insa_lyon.restin.Views;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.insa_lyon.restin.Modeles.DataSingleton;
@@ -20,10 +19,14 @@ import com.insa_lyon.restin.Modeles.Menu;
 import com.insa_lyon.restin.Modeles.MenuMatin;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.Vector;
-import java.util.zip.Inflater;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -34,14 +37,25 @@ public class RestaurantActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private ViewPager viewPagerMenu = null;
+    private ViewPager viewPagerGraph = null;
 
     private View vueMenuMidi = null;
     private View vueMenuSoir = null;
     private View vueMenuMatin = null;
 
+    private View vueGraphMatin = null;
+    private View vueGraphMidi = null;
+    private View vueGraphSoir = null;
+
+
     private Button buttonMenuMidi = null;
     private Button buttonMenuSoir = null;
     private Button buttonMenuMatin = null;
+
+
+    private Button buttonGraphMidi = null;
+    private Button buttonGraphSoir = null;
+    private Button buttonGraphMatin = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +72,18 @@ public class RestaurantActivity extends AppCompatActivity {
         }
 
         this.viewPagerMenu = (ViewPager)findViewById(R.id.viewPageMenu);
+        this.viewPagerGraph = (ViewPager) findViewById(R.id.viewGraph);
 
         Vector<View> pagesMenu = new Vector<>();
+        Vector<View> pagesGraph= new Vector<>();
+
         Vector<String> titles1 = new Vector<>();
+        Vector<String> titles2 = new Vector<>();
 
         addViewAccordingToMenus(pagesMenu, titles1);
-        showButton();
+        addViewAccordingToGraph(pagesGraph, titles2);
+        changeOnClickMenuButton();
+        changeOnClickGraphButton();
 
 
         this.viewPagerMenu.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -73,7 +93,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                focusOnButton(position);
+                focusOnMenuButton(position);
             }
 
             @Override
@@ -82,7 +102,41 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        focusOnButton(this.viewPagerMenu.getCurrentItem());
+        this.viewPagerGraph.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                focusOnGraphButton(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        focusOnMenuButton(this.viewPagerMenu.getCurrentItem());
+        focusOnGraphButton(this.viewPagerMenu.getCurrentItem());
+        setRatingBar();
+        setAvis();
+
+        if(!this.restaurant.getAvis().isEmpty()) {
+            Button buttonAvis = (Button) findViewById(R.id.avisButton);
+            buttonAvis.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(RestaurantActivity.this, AvisActivity.class);
+                    intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                    RestaurantActivity.this.startActivity(intent);
+                }
+            });
+        }
+
+
 
     }
 
@@ -259,7 +313,7 @@ public class RestaurantActivity extends AppCompatActivity {
         layout.addView(view);
     }
 
-    private void showButton() {
+    private void changeOnClickMenuButton() {
         if(this.buttonMenuMatin == null) {
             findViewById(R.id.matinButton).setVisibility(View.GONE);
         } else {
@@ -293,7 +347,7 @@ public class RestaurantActivity extends AppCompatActivity {
         }
     }
 
-    private void focusOnButton(int currentItem) {
+    private void focusOnMenuButton(int currentItem) {
 
         switch (currentItem) {
             case 0 :
@@ -344,6 +398,170 @@ public class RestaurantActivity extends AppCompatActivity {
     private void unselectButton(Button buttonToUnselect) {
         buttonToUnselect.setTextColor(Color.BLACK);
         buttonToUnselect.setBackgroundColor(View.INVISIBLE);
+    }
+
+    private void setRatingBar() {
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBarRestau);
+        ratingBar.setRating((float)this.restaurant.getMoyenneNote());
+        /** TODO : faire check si y a des avis et afficher/cacher kes bons trucs**/
+    }
+
+    private void setAvis() {
+        TextView avisAverage = (TextView) findViewById(R.id.avisAverage);
+        Integer nbAvis = 0;
+        if(this.restaurant.getAvis() != null) {
+            nbAvis = this.restaurant.getAvis().size();
+        }
+
+        avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
+        if(nbAvis == 0) {
+
+        }
+    }
+
+    private void addViewAccordingToGraph(Vector<View> pagesViewGraph, Vector<String> titles) {
+
+        TreeMap<Double,Integer> affluenceMatin = restaurant.getAffluenceMatin();
+        TreeMap<Double,Integer> affluenceMidi = restaurant.getAffluenceMidi();
+        TreeMap<Double,Integer> affluenceSoir = restaurant.getAffluenceSoir();
+
+        if (affluenceMatin != null) {
+            this.vueGraphMatin = getLayoutInflater().inflate(R.layout.graph_morning, null);
+            remplirGraph(affluenceMatin, vueGraphMatin, R.id.graphMorningView);
+            pagesViewGraph.add(vueGraphMatin);
+            buttonGraphMatin = (Button) findViewById(R.id.matinButtonGraph);
+        }
+
+        if(affluenceMidi != null) {
+            this.vueGraphMidi = getLayoutInflater().inflate(R.layout.graph_midday, null);
+            remplirGraph(affluenceMidi, vueGraphMidi, R.id.graphMiddayView);
+            pagesViewGraph.add(vueGraphMidi);
+            buttonGraphMidi = (Button) findViewById(R.id.midiButtonGraph);
+        }
+
+        if (affluenceSoir != null) {
+            this.vueGraphSoir = getLayoutInflater().inflate(R.layout.graph_evening, null);
+            remplirGraph(affluenceSoir, vueGraphSoir, R.id.graphEveningView);
+            pagesViewGraph.add(vueMenuSoir);
+            buttonGraphSoir = (Button) findViewById(R.id.soirButtonGraph);
+        }
+
+        GraphAdpater graphAdapter = new GraphAdpater(this,pagesViewGraph,titles);
+        this.viewPagerGraph.setAdapter(graphAdapter);
+
+    }
+
+    private void remplirGraph(TreeMap<Double, Integer> affluenceList, View vuePagerGraph,
+                              Integer idOfGraph) {
+        GraphView graph = (GraphView) vuePagerGraph.findViewById(idOfGraph);
+        DataPoint[] pointsData =  new DataPoint[affluenceList.size()];
+        int i=0;
+        for(Double hour : affluenceList.keySet()) {
+            pointsData[i] = new DataPoint(hour, affluenceList.get(hour));
+            i++;
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(pointsData);
+        graph.removeAllSeries();
+
+        GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
+        gridLabel.setVerticalAxisTitle("Minutes");
+        gridLabel.setHorizontalAxisTitle("Heure ");
+        gridLabel.setPadding(32);
+        graph.getViewport().setMinX(affluenceList.firstKey());
+        graph.getViewport().setMaxX(affluenceList.lastKey()+0.1);
+
+        graph.getViewport().setMinY(0.0);
+        graph.getViewport().setMaxY(getMaxTemps(affluenceList));
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.addSeries(series);
+    }
+
+    private double getMaxTemps(TreeMap<Double, Integer> affluenceList) {
+        Integer max = 0;
+        for(Double hour : affluenceList.keySet()) {
+            if(max < affluenceList.get(hour)) {
+                max = affluenceList.get(hour);
+            }
+        }
+        return max;
+    }
+
+    private void changeOnClickGraphButton() {
+        if(this.buttonGraphMatin == null) {
+            findViewById(R.id.matinButtonGraph).setVisibility(View.GONE);
+        } else {
+            this.buttonGraphMatin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(0);
+                }
+            });
+        }
+        if(this.buttonGraphMidi == null) {
+            findViewById(R.id.midiButtonGraph).setVisibility(View.GONE);
+        } else {
+            this.viewPagerGraph.setCurrentItem(1);
+            this.buttonGraphMidi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(1);
+                }
+            });
+        }
+        if(this.buttonGraphSoir == null) {
+            findViewById(R.id.soirButtonGraph).setVisibility(View.GONE);
+        } else {
+            this.buttonGraphSoir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(2);
+                }
+            });
+        }
+    }
+
+    private void focusOnGraphButton(int currentItem) {
+
+        switch (currentItem) {
+            case 0 :
+                if(buttonGraphMatin != null ) {
+                    selectButton(buttonGraphMatin);
+                    if(buttonGraphSoir != null) {
+                        unselectButton(buttonGraphSoir);
+                    }
+                    if(buttonGraphMidi != null) {
+                        unselectButton(buttonGraphMidi);
+                    }
+                } else if (buttonGraphMidi != null) {
+                    selectButton(buttonGraphMidi);
+                    if(buttonGraphSoir != null) {
+                        unselectButton(buttonGraphSoir);
+                    }
+                } else {
+                    selectButton(buttonGraphSoir);
+                }
+                break;
+            case 1 :
+                if (buttonGraphMidi != null) {
+                    selectButton(buttonGraphMidi);
+                    unselectButton(buttonGraphMatin);
+                    if(buttonGraphSoir != null) {
+                        unselectButton(buttonGraphSoir);
+                    }
+                } else {
+                    selectButton(buttonGraphSoir);
+                    unselectButton(buttonGraphMatin);
+                }
+                break;
+            case 2 :
+                selectButton(buttonGraphSoir);
+                unselectButton(buttonGraphMatin);
+                unselectButton(buttonGraphMidi);
+                break;
+            default :
+                break;
+        }
     }
 
 }

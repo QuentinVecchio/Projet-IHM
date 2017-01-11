@@ -23,31 +23,124 @@
             android:layout_alignParentStart="true">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ratingBar"
-                    android:numStars="5"
-                    android:isIndicator="false"
-                    style="@style/Widget.AppCompat.RatingBar.Indicator"
-                    android:layout_margin="10dp"
-                    android:rating="4"
-                    android:stepSize="0.1" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/line_effect_restaurant_shape">
 
                 <TextView
-                    android:text="10 Avis"
+                    android:text="Avis"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="gravity"
-                    android:id="@+id/textView2"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avisTitle"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
                     android:gravity="center_vertical|center_horizontal"
-                    android:layout_margin="10dp" />
+                    android:textSize="24sp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Note moyenne (10 avis) : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/avisAverage"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:gravity="left"
+                        android:textSize="16sp"
+                        android:paddingRight="2dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBarRestau"
+                        android:numStars="5"
+                        android:isIndicator="true"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:layout_margin="2dp"
+                        android:rating="4"
+                        android:stepSize="0.1"
+                        android:gravity="center_vertical|center_horizontal"></RatingBar>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avisLayoutLast">
+
+                    <TextView
+                        android:text="Dernier avis :                      "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lastAvisTitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:gravity="left"
+                        android:textSize="16sp"
+                        android:paddingRight="2dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBarAvis"
+                        android:numStars="5"
+                        android:isIndicator="true"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:layout_margin="2dp"
+                        android:rating="4"
+                        android:stepSize="0.1"
+                        android:gravity="right"></RatingBar>
+                </LinearLayout>
+                <TextView
+                    android:text="Avis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avisContainer"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:gravity="left"
+                    android:textSize="16sp"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:text="Voir tous les avis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avisButton"
+                    android:background="@color/wallet_dim_foreground_holo_dark"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="11sp"
+                    android:gravity="center_horizontal|center_vertical"/>
 
             </LinearLayout>
+
+            <TextView
+                android:text="Menu du jour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/menuTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="24sp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -92,11 +185,74 @@
                     </Button>
                 </LinearLayout>
             </HorizontalScrollView>
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPageMenu"
                 android:layout_height="400dp"
                 android:layout_width="match_parent"
-                ></android.support.v4.view.ViewPager>
+                android:background="@drawable/line_effect_restaurant_shape"></android.support.v4.view.ViewPager>
+
+
+            <TextView
+                android:text="Temps d'attente moyen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/graphTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="24sp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scrollbarSize="0dp"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/buttonsGraph"
+                    android:gravity="center">
+
+                    <Button
+                        android:text="Matin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/matinButtonGraph"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+
+                    <Button
+                        android:text="Midi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/midiButtonGraph"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+
+                    <Button
+                        android:text="Soir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/soirButtonGraph"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                    </Button>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewGraph"
+                android:layout_height="300dp"
+                android:layout_width="match_parent"
+                android:background="@drawable/line_effect_restaurant_shape"></android.support.v4.view.ViewPager>
 
 
         </LinearLayout>

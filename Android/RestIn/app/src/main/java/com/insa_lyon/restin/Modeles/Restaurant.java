@@ -1,6 +1,7 @@
 package com.insa_lyon.restin.Modeles;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Created by quentinvecchio on 03/01/2017.
@@ -17,8 +18,14 @@ public class Restaurant {
     private Menu menuSoir;
     private long distance;
     private long duration;
+    private TreeMap<Double,Integer> affluenceMatin;
+    private TreeMap<Double,Integer> affluenceMidi;
+    private TreeMap<Double,Integer> affluenceSoir;
 
-    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis, MenuMatin menuMatin, Menu menuMidi, Menu menuSoir,double prix) {
+    public Restaurant(String name, double lat, double lon, ArrayList<Avis> avis,
+                      MenuMatin menuMatin, Menu menuMidi, Menu menuSoir,
+                      TreeMap<Double,Integer> affluenceMatin, TreeMap<Double,Integer> affluenceMidi,
+                      TreeMap<Double,Integer> affluenceSoir, double prix) {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
@@ -26,6 +33,9 @@ public class Restaurant {
         this.menuMatin = menuMatin;
         this.menuMidi = menuMidi;
         this.menuSoir = menuSoir;
+        this.affluenceMatin = affluenceMatin;
+        this.affluenceMidi = affluenceMidi;
+        this.affluenceSoir = affluenceSoir;
         this.distance = -1;
         this.duration = -1;
         this.prixMoyen = prix;
@@ -115,5 +125,29 @@ public class Restaurant {
      */
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public TreeMap<Double, Integer> getAffluenceMatin() {
+        return affluenceMatin;
+    }
+
+    public void setAffluenceMatin(TreeMap<Double, Integer> affluenceMatin) {
+        this.affluenceMatin = affluenceMatin;
+    }
+
+    public TreeMap<Double, Integer> getAffluenceMidi() {
+        return affluenceMidi;
+    }
+
+    public void setAffluenceMidi(TreeMap<Double, Integer> affluenceMidi) {
+        this.affluenceMidi = affluenceMidi;
+    }
+
+    public TreeMap<Double, Integer> getAffluenceSoir() {
+        return affluenceSoir;
+    }
+
+    public void setAffluenceSoir(TreeMap<Double, Integer> affluenceSoir) {
+        this.affluenceSoir = affluenceSoir;
     }
 }
