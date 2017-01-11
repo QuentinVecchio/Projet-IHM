@@ -1,6 +1,8 @@
 package com.insa_lyon.restin.Modeles;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.TreeMap;
 
 /**
@@ -149,5 +151,19 @@ public class Restaurant {
 
     public void setAffluenceSoir(TreeMap<Double, Integer> affluenceSoir) {
         this.affluenceSoir = affluenceSoir;
+    }
+
+    public void sortListAvis() {
+        Collections.sort(this.avis, new Comparator<Avis>() {
+            @Override
+            public int compare(Avis a1, Avis a2) {
+                if(a1.getDate().getTime() == a2.getDate().getTime()) {
+                    return 0;
+                } else if(a1.getDate().getTime() < a2.getDate().getTime()) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
     }
 }
