@@ -111,13 +111,14 @@ public class AvisActivity extends AppCompatActivity {
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Avis avis = new Avis(avisEditText.getText().toString(), (double) ratingBar.getRating(), new Date());
-                restaurant.getAvis().add(0,avis);
-                ((BaseAdapter)avisListView.getAdapter()).notifyDataSetChanged();
-                avisEditText.setText("");
-                ratingBar.setRating(3);
-                avisListView.smoothScrollToPosition(0);
-
+                if (!avisEditText.getText().toString().replace(" ", "").replace("\n", "").isEmpty()) {
+                    Avis avis = new Avis(avisEditText.getText().toString(), (double) ratingBar.getRating(), new Date());
+                    restaurant.getAvis().add(0, avis);
+                    ((BaseAdapter) avisListView.getAdapter()).notifyDataSetChanged();
+                    avisEditText.setText("");
+                    ratingBar.setRating(3);
+                    avisListView.smoothScrollToPosition(0);
+                }
             }
         });
 
