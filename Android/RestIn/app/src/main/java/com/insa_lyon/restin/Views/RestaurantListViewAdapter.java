@@ -46,16 +46,16 @@ public class RestaurantListViewAdapter extends BaseAdapter {
         }
 
         TextView nameTextView = (TextView)layoutItem.findViewById(R.id.nameTextView);
+        TextView priceTextView = (TextView)layoutItem.findViewById(R.id.priceTextView);
         TextView waitingTimeTextView = (TextView)layoutItem.findViewById(R.id.waitingTimeTextView);
         TextView distanceTextView = (TextView)layoutItem.findViewById(R.id.distanceTextView);
         TextView opinionNumberTextView = (TextView)layoutItem.findViewById(R.id.opinionNumberTextView);
         RatingBar ratingBar = (RatingBar)layoutItem.findViewById(R.id.ratingBar);
 
-
-
         Restaurant restaurant = restaurants.get(position);
 
         nameTextView.setText(restaurant.getName());
+        priceTextView.setText("Prix moyen : " + restaurant.getPrixMoyen() + "€");
         if(restaurant.getDuration() != -1) {
             waitingTimeTextView.setText("Attente : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
         } else {

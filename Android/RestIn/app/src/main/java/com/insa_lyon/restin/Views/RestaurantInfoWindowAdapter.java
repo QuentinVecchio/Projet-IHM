@@ -34,13 +34,15 @@ public class RestaurantInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         View view = this.activity.getLayoutInflater().inflate(R.layout.restautant_info_window_layout, null);
 
         TextView nameTextView = (TextView)view.findViewById(R.id.nameTextView);
+        TextView priceTextView = (TextView)view.findViewById(R.id.priceTextView);
         TextView waitingTimeTextView = (TextView)view.findViewById(R.id.waitingTimeTextView);
         TextView distanceTextView = (TextView)view.findViewById(R.id.distanceTextView);
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
-        nameTextView.setText(marker.getTitle());
-
         Restaurant restaurant = activity.getMapMarkersRestaurants().get(marker);
+
+        nameTextView.setText(marker.getTitle());
+        priceTextView.setText("Prix moyen : " + restaurant.getPrixMoyen() + "€");
         if(restaurant.getDuration() != -1) {
             waitingTimeTextView.setText("Attente : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
         } else {

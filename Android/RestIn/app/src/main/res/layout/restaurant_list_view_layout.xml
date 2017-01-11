@@ -44,6 +44,18 @@
         android:paddingRight="10dp"
         android:textSize="14sp"
         android:textColor="@android:color/black"
+        android:id="@+id/priceTextView"
+        android:textAlignment="textStart"
+        android:layout_weight="1">
+    </TextView>
+
+    <TextView android:text="Attente : 10min"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
         android:id="@+id/waitingTimeTextView"
         android:textAlignment="textStart"
         android:layout_weight="1">
