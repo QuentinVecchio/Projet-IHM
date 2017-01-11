@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
+import com.insa_lyon.restin.Modeles.Avis;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Menu;
 import com.insa_lyon.restin.Modeles.MenuMatin;
@@ -24,7 +26,10 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -32,9 +37,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private Restaurant restaurant;
 
-    private final int COLOR_BUTTON = 0xFFD92727;
-
-    private TabLayout tabLayout;
+    private final int COLOR = 0xFFD92727;
 
     private ViewPager viewPagerMenu = null;
     private ViewPager viewPagerGraph = null;
@@ -122,6 +125,7 @@ public class RestaurantActivity extends AppCompatActivity {
         focusOnGraphButton(this.viewPagerMenu.getCurrentItem());
         setRatingBar();
         setAvis();
+        setPrixOnView();
 
         if(!this.restaurant.getAvis().isEmpty()) {
             Button buttonAvis = (Button) findViewById(R.id.avisButton);
@@ -391,7 +395,7 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void selectButton(Button buttonToSelect) {
-        buttonToSelect.setTextColor(COLOR_BUTTON);
+        buttonToSelect.setTextColor(COLOR );
         buttonToSelect.setBackgroundResource(R.drawable.menu_button_shape);
     }
 
@@ -408,14 +412,21 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private void setAvis() {
         TextView avisAverage = (TextView) findViewById(R.id.avisAverage);
-        Integer nbAvis = 0;
-        if(this.restaurant.getAvis() != null) {
-            nbAvis = this.restaurant.getAvis().size();
-        }
-
-        avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
-        if(nbAvis == 0) {
-
+        if(!this.restaurant.getAvis().isEmpty()) {
+            int nbAvis = this.restaurant.getAvis().size();
+            avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
+            TextView lastAvisTitle = (TextView) findViewById(R.id.lastAvisTitle);
+            Avis avisToShow = this.restaurant.getAvis().get(nbAvis - 1);
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.FRENCH);
+            DateFormat dateFormatTime = new SimpleDateFormat("HH:mm", Locale.FRENCH);
+            lastAvisTitle.setText("Dernier avis : " + dateFormat.format(avisToShow.getDate())
+                    + " à " + dateFormatTime.format(avisToShow.getDate()));
+            TextView avisText = (TextView) findViewById(R.id.avisContainer);
+            avisText.setText(avisToShow.getAvis());
+            RatingBar avisRatingBar = (RatingBar) findViewById(R.id.ratingBarAvis);
+            avisRatingBar.setRating((float)avisToShow.getNote());
+        } else {
+            /** TODO : OKOKOKOKO AF FAIRE */
         }
     }
 
@@ -442,7 +453,7 @@ public class RestaurantActivity extends AppCompatActivity {
         if (affluenceSoir != null) {
             this.vueGraphSoir = getLayoutInflater().inflate(R.layout.graph_evening, null);
             remplirGraph(affluenceSoir, vueGraphSoir, R.id.graphEveningView);
-            pagesViewGraph.add(vueMenuSoir);
+            pagesViewGraph.add(vueGraphSoir);
             buttonGraphSoir = (Button) findViewById(R.id.soirButtonGraph);
         }
 
@@ -474,6 +485,7 @@ public class RestaurantActivity extends AppCompatActivity {
         graph.getViewport().setMaxY(getMaxTemps(affluenceList));
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
+        series.setColor(COLOR);
         graph.addSeries(series);
     }
 
@@ -562,6 +574,11 @@ public class RestaurantActivity extends AppCompatActivity {
             default :
                 break;
         }
+    }
+
+    private void setPrixOnView() {
+        TextView viewPrix = (TextView) findViewById(R.id.prixView);
+        viewPrix.setText("Prix moyen : " + String.valueOf(restaurant.getPrixMoyen()) + "€");
     }
 
 }
