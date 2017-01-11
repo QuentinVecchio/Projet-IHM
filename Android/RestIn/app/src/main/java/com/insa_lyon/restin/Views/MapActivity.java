@@ -37,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -127,12 +128,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Restaurant restaurant = (Restaurant)restaurantListViewAdapter.getItem(position);
-               CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
-                mMap.moveCamera(center);
-                mapRestaurantsMarkers.get(restaurant).showInfoWindow();
 
-
-
+                Intent intent = new Intent(MapActivity.this, RestaurantActivity.class);
+                intent.putExtra("restaurantIndex",DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                MapActivity.this.startActivity(intent);
             }
         });
 
@@ -325,12 +324,35 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mapRestaurantsMarkers.put(restaurant,marker);
         }
 
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Intent intent = new Intent(MapActivity.this, RestaurantActivity.class);
                 intent.putExtra("restaurantIndex",DataSingleton.getInstance().getRestaurantPosition(mapMarkersRestaurants.get(marker)));
                 MapActivity.this.startActivity(intent);
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                // Calculate required horizontal shift for current screen density
+                final int dX = getResources().getDimensionPixelSize(R.dimen.map_dx);
+                // Calculate required vertical shift for current screen density
+                final int dY = getResources().getDimensionPixelSize(R.dimen.map_dy);
+                final Projection projection = mMap.getProjection();
+                final Point markerPoint = projection.toScreenLocation(
+                        marker.getPosition()
+                );
+                // Shift the point we will use to center the map
+                markerPoint.offset(dX, dY);
+                final LatLng newLatLng = projection.fromScreenLocation(markerPoint);
+                // Buttery smooth camera swoop :)
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(newLatLng),500,null);
+                // Show the info window (as the overloaded method would)
+                marker.showInfoWindow();
+                return true; // Consume the event since it was dealt with
             }
         });
     }
@@ -346,7 +368,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onConnected(Bundle bundle) {
-
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
