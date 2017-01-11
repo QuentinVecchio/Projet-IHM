@@ -261,7 +261,6 @@ public class DataSingleton {
             affluenceSoirGrillon.put(19.50, 14);
             affluenceSoirGrillon.put(19.75, 10);
             affluenceSoirGrillon.put(20.0, 7);
-            affluenceSoirGrillon.put(20.25, 2);
 
             affluenceMatinGrillon.put(7.0, 2);
             affluenceMatinGrillon.put(7.25, 3);
