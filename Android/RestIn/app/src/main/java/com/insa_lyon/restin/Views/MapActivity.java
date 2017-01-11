@@ -342,10 +342,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public boolean onMarkerClick(final Marker marker) {
                 // Calculate required horizontal shift for current screen density
+
+                //MapViewLayoutParams
                 final int dX = getResources().getDimensionPixelSize(R.dimen.map_dx);
                 // Calculate required vertical shift for current screen density
                 final int dY = getResources().getDimensionPixelSize(R.dimen.map_dy);
@@ -358,13 +361,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 final LatLng newLatLng = projection.fromScreenLocation(markerPoint);
                 // Buttery smooth camera swoop :)
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(newLatLng),500,null);
+
                 // Show the info window (as the overloaded method would)
-                marker.showInfoWindow();
+                ViewGroup contentView = (ViewGroup)getWindow().getDecorView();
+                contentView.post(new Runnable() {
+                    public void run() {
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(newLatLng), 250, null);
+                    }
+                });
+
 
                 return false;
             }
         });
+
     }
 
     protected synchronized void buildGoogleApiClient() {
