@@ -107,7 +107,9 @@ public class RestaurantActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        
+        super.onResume();
+        setAvis();
+        setRatingBar();
     }
 
     private void setOnClickListenerButtonAvis() {
@@ -543,7 +545,7 @@ public class RestaurantActivity extends AppCompatActivity {
         avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
         if(nbAvis != 0) {
             TextView lastAvisTitle = (TextView) findViewById(R.id.lastAvisTitle);
-            Avis avisToShow = this.restaurant.getAvis().get(nbAvis - 1);
+            Avis avisToShow = this.restaurant.getAvis().get(0);
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.FRENCH);
             DateFormat dateFormatTime = new SimpleDateFormat("HH:mm", Locale.FRENCH);
             lastAvisTitle.setText("Dernier avis : " + dateFormat.format(avisToShow.getDate())
