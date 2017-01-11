@@ -89,14 +89,44 @@ public class RestaurantActivity extends AppCompatActivity {
 
         addViewAccordingToMenus(pagesMenu, titles1);
         addViewAccordingToGraph(pagesGraph, titles2);
+
         changeOnClickMenuButton();
         changeOnClickGraphButton();
 
+        setPageChangeListeners();
 
+        focusOnMenuButton(this.viewPagerMenu.getCurrentItem());
+        focusOnGraphButton(this.viewPagerGraph.getCurrentItem());
+        setRatingBar();
+        setAvis();
+        setPrixOnView();
+
+        setOnClickListenerButtonAvis();
+
+    }
+
+    @Override
+    public void onResume() {
+        
+    }
+
+    private void setOnClickListenerButtonAvis() {
+        Button buttonAvis = (Button) findViewById(R.id.avisButton);
+        buttonAvis.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RestaurantActivity.this, AvisActivity.class);
+                intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                RestaurantActivity.this.startActivity(intent);
+            }
+        });
+    }
+
+    private void setPageChangeListeners() {
         this.viewPagerMenu.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
@@ -104,9 +134,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
 
         this.viewPagerGraph.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -120,28 +148,8 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
-
-        focusOnMenuButton(this.viewPagerMenu.getCurrentItem());
-        focusOnGraphButton(this.viewPagerGraph.getCurrentItem());
-        setRatingBar();
-        setAvis();
-        setPrixOnView();
-
-        Button buttonAvis = (Button) findViewById(R.id.avisButton);
-        buttonAvis.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RestaurantActivity.this, AvisActivity.class);
-                intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
-                RestaurantActivity.this.startActivity(intent);
-            }
-        });
-
     }
 
     @Override
