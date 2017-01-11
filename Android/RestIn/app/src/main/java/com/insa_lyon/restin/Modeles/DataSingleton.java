@@ -150,7 +150,7 @@ public class DataSingleton {
 
             //Restaurant le Prevert
             ArrayList<Avis> avisPrevert = new ArrayList<>();
-            avisPrevert.add(new Avis("Possibilité de prendre à emporté, c'est pratique.", 4, dateFormat.parse("04/01/2017 19:50")));
+            avisPrevert.add(new Avis("Possibilité de prendre à emporté, c'est pratique.", 3, dateFormat.parse("04/01/2017 19:50")));
             avisPrevert.add(new Avis("Du choix et assez bon pour un restaurant universitaire. Je recommande.", 4, dateFormat.parse("06/01/2017 13:08")));
             avisPrevert.add(new Avis("Aujourd'hui j'ai pris du poisson.. J'avais l'impression d'avoir tout sauf du poisson.. Beurk..", 1, dateFormat.parse("07/01/2017 12:03")));
             avisPrevert.add(new Avis("Un peu radin sur les quantités...", 1, dateFormat.parse("08/01/2017 11:57")));
