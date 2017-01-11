@@ -298,6 +298,7 @@ public class FilterActivity extends AppCompatActivity {
         //on verifie le temps
         for (int i = restaurantList.size() - 1; i >= 0; i--) {
             double attente = (double)restaurantList.get(i).getDuration()/60.0;
+            if(attente<0) attente=0;
             if (attente > this.maxTime || attente < this.minTime) {
                 restaurantList.remove(i);
             }
@@ -305,7 +306,7 @@ public class FilterActivity extends AppCompatActivity {
         //on verifie la distance
         for (int i = restaurantList.size() - 1; i >= 0; i--) {
             double distance = (double)restaurantList.get(i).getDistance();
-            if(distance == -1)distance=0;
+            if(distance < 0)distance=0;
             if (distance < this.minDistance || distance > this.maxDistance) {
                 restaurantList.remove(i);
             }
