@@ -22,10 +22,6 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
@@ -57,11 +53,7 @@ public class FilterActivity extends AppCompatActivity {
     private double maxTime;
     private double minRating;
     private String sortingBy;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private String keyWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +70,8 @@ public class FilterActivity extends AppCompatActivity {
         distance_bar = (RangeSeekBar) findViewById(R.id.distance_filter);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         spinner = (Spinner) findViewById(R.id.spinner);
+        //SearchBar
+        searchView = (SearchView) findViewById(R.id.search_filter);
         //on recupere les valeurs des filtres
         maxPrice = price_bar.getSelectedMaxValue().doubleValue();
         minPrice = price_bar.getSelectedMinValue().doubleValue();
@@ -86,9 +80,8 @@ public class FilterActivity extends AppCompatActivity {
         maxDistance = distance_bar.getSelectedMaxValue().doubleValue();
         minDistance = distance_bar.getSelectedMinValue().doubleValue();
         minRating = ratingBar.getRating();
+        keyWords = searchView.getQuery().toString();
         sortingBy = spinner.getSelectedItem().toString();
-        //SearchBar
-        searchView = (SearchView) findViewById(R.id.search_filter);
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
         List<Restaurant> restaurantList = applySort();
@@ -177,6 +170,7 @@ public class FilterActivity extends AppCompatActivity {
                 listView.setAdapter(adapter2);
             }
         });
+
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -190,8 +184,7 @@ public class FilterActivity extends AppCompatActivity {
                 float visibleBottomSheetHeight = (bottomSheet.getHeight() - bottomSheetBehavior.getPeekHeight()) * slideOffset + bottomSheetBehavior.getPeekHeight();
 
                 //LayoutParams
-                ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_filter);
-                ViewGroup.LayoutParams layoutParams = scrollView.getLayoutParams();
+                ViewGroup.LayoutParams layoutParams = items.getLayoutParams();
 
                 //ScreenHeight
                 Display display = getWindowManager().getDefaultDisplay();
@@ -207,7 +200,7 @@ public class FilterActivity extends AppCompatActivity {
 
                 //Updating MapViewLayoutHeight
                 layoutParams.height = screenHeight - ((int) Math.ceil(visibleBottomSheetHeight)) - getSupportActionBar().getHeight() - statusBarHeight;
-                scrollView.setLayoutParams(layoutParams);
+                items.setLayoutParams(layoutParams);
             }
 
 
@@ -239,9 +232,26 @@ public class FilterActivity extends AppCompatActivity {
                 searchView.setIconified(false);
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                BottomSheetBehavior bottomSheetBehavior2 = BottomSheetBehavior.from(bottomSheet);
+                bottomSheetBehavior2.setState(BottomSheetBehavior.STATE_EXPANDED);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                keyWords = s;
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
+                BottomSheetBehavior bottomSheetBehavior2 = BottomSheetBehavior.from(bottomSheet);
+                bottomSheetBehavior2.setState(BottomSheetBehavior.STATE_EXPANDED);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -256,7 +266,16 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public List<Restaurant> applySort() {
-        ArrayList<Restaurant> restaurantList = (ArrayList<Restaurant>) DataSingleton.getInstance().getRestaurants().clone();
+        List<Restaurant> restaurantList = (ArrayList<Restaurant>) DataSingleton.getInstance().getRestaurants().clone();
+        //on verifie les mots clés
+        if(!keyWords.isEmpty()) {
+            for (int i = restaurantList.size() - 1; i >= 0; i--) {
+                String name = restaurantList.get(i).getName().toLowerCase();
+                if (!name.toLowerCase().contains(keyWords)) {
+                    restaurantList.remove(i);
+                }
+            }
+        }
         //on verifie le prix
         for (int i = restaurantList.size() - 1; i >= 0; i--) {
             double prix = restaurantList.get(i).getPrixMoyen();
@@ -265,7 +284,20 @@ public class FilterActivity extends AppCompatActivity {
             }
         }
         //on verifie le temps
+        for (int i = restaurantList.size() - 1; i >= 0; i--) {
+            double attente = (double)restaurantList.get(i).getDuration()/60.0;
+            if (attente > this.maxTime || attente < this.minTime) {
+                restaurantList.remove(i);
+            }
+        }
         //on verifie la distance
+        for (int i = restaurantList.size() - 1; i >= 0; i--) {
+            double distance = (double)restaurantList.get(i).getDistance();
+            if(distance == -1)distance=0;
+            if (distance < this.minDistance || distance > this.maxDistance) {
+                restaurantList.remove(i);
+            }
+        }
         //on verifie la qualite
         for (int i = restaurantList.size() - 1; i >= 0; i--) {
             double rate = restaurantList.get(i).getMoyenneNote();
@@ -295,12 +327,38 @@ public class FilterActivity extends AppCompatActivity {
             }
             case "Temps d'attente":
             {
-
+                //on trie en fonction du temps d'attente asc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getDuration()<r2.getDuration()) {
+                            return -1;
+                        }
+                        if(r1.getDuration()>r2.getDuration()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                });
                 break;
             }
             case "Distance":
             {
-
+                //on trie en fonction de la distance asc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getDistance()<r2.getDistance()) {
+                            return -1;
+                        }
+                        if(r1.getDistance()>r2.getDistance()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                });
                 break;
             }
             case "Qualité":
@@ -321,9 +379,6 @@ public class FilterActivity extends AppCompatActivity {
                 });
                 break;
             }
-        }
-        for (int i =0;i<restaurantList.size(); i++) {
-            System.out.println("prix : "+restaurantList.get(i).getPrixMoyen());
         }
         return restaurantList;
     }

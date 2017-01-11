@@ -6,7 +6,7 @@
     <string name="filters">Filtres</string>
     <string name="trier">Trier par</string>
     <string name="qualite">Qualité minimum</string>
-    <string name="distance">Distance en mètre</string>
+    <string name="distance">Distance en mètres</string>
     <string name="tempsAttente">Temps d\'attente en minutes</string>
     <string name="prix">Prix moyen en euros</string>
     <string name="title_activity_maps">Map</string>
