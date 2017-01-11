@@ -163,8 +163,27 @@ public class DataSingleton {
 
             MenuMatin menuMatinPrevert = new MenuMatin(produitPrevert, boissonPrevert);
 
+            TreeMap<Double,Integer> affluenceSoirPrevert = new TreeMap<>();
+            TreeMap<Double,Integer> affluenceMatinPrevert = new TreeMap<>();
+
+            affluenceSoirPrevert.put(18.5, 2);
+            affluenceSoirPrevert.put(18.75, 4);
+            affluenceSoirPrevert.put(19.0, 9);
+            affluenceSoirPrevert.put(19.25, 12);
+            affluenceSoirPrevert.put(19.50, 14);
+            affluenceSoirPrevert.put(19.75, 10);
+            affluenceSoirPrevert.put(20.0, 7);
+            affluenceSoirPrevert.put(20.25, 2);
+
+            affluenceMatinPrevert.put(7.0, 2);
+            affluenceMatinPrevert.put(7.25, 3);
+            affluenceMatinPrevert.put(7.5, 5);
+            affluenceMatinPrevert.put(7.75, 4);
+            affluenceMatinPrevert.put(8.0, 3);
+            affluenceMatinPrevert.put(8.25, 3);
+
             Restaurant prevert = new Restaurant("Le Prevert", 45.781173, 4.873638, avisPrevert,
-                    menuMatinPrevert, null, menuSoirPrevert, null, null, null, 3.5);
+                    menuMatinPrevert, null, menuSoirPrevert, affluenceMatinPrevert, null, affluenceSoirPrevert, 3.5);
             this.restaurants.add(prevert);
 
             //Restaurant le grillon
@@ -207,8 +226,39 @@ public class DataSingleton {
 
             MenuMatin menuMatinGrillon = new MenuMatin(produitGrillon, boissonGrillon);
 
+            TreeMap<Double,Integer> affluenceSoirGrillon = new TreeMap<>();
+            TreeMap<Double,Integer> affluenceMidiGrillon = new TreeMap<>();
+            TreeMap<Double,Integer> affluenceMatinGrillon = new TreeMap<>();
+
+            affluenceSoirGrillon.put(18.5, 2);
+            affluenceSoirGrillon.put(18.75, 4);
+            affluenceSoirGrillon.put(19.0, 9);
+            affluenceSoirGrillon.put(19.25, 12);
+            affluenceSoirGrillon.put(19.50, 14);
+            affluenceSoirGrillon.put(19.75, 10);
+            affluenceSoirGrillon.put(20.0, 7);
+            affluenceSoirGrillon.put(20.25, 2);
+
+            affluenceMatinGrillon.put(7.0, 2);
+            affluenceMatinGrillon.put(7.25, 3);
+            affluenceMatinGrillon.put(7.5, 5);
+            affluenceMatinGrillon.put(7.75, 4);
+            affluenceMatinGrillon.put(8.0, 3);
+            affluenceMatinGrillon.put(8.25, 3);
+
+            affluenceMidiGrillon.put(11.5, 6);
+            affluenceMidiGrillon.put(12.0, 8);
+            affluenceMidiGrillon.put(12.5, 16);
+            affluenceMidiGrillon.put(12.8, 10);
+            affluenceMidiGrillon.put(12.9, 14);
+            affluenceMidiGrillon.put(13.0, 12);
+            affluenceMidiGrillon.put(13.5, 10);
+            affluenceMidiGrillon.put(14.0, 5);
+            affluenceMidiGrillon.put(14.25, 3);
+
             Restaurant grillon = new Restaurant("Le Grillon", 45.783927, 4.875049, avisGrillon,
-                    menuMatinGrillon, menuMidiGrillon, menuSoirGrillon, null, null, null, 3.70);
+                    menuMatinGrillon, menuMidiGrillon, menuSoirGrillon, affluenceMatinGrillon,
+                    affluenceMidiGrillon, affluenceSoirGrillon, 3.70);
             this.restaurants.add(grillon);
 
             //Restaurant la Roulotte dorée
@@ -228,8 +278,20 @@ public class DataSingleton {
 
             Menu menuSoirRoulotte = new Menu(entreeRoulotte, platRoulotte, dessertRoulotte);
 
+            TreeMap<Double,Integer> affluenceSoirRoulotte = new TreeMap<>();
+
+            affluenceSoirRoulotte.put(19.0, 6);
+            affluenceSoirRoulotte.put(19.50, 8);
+            affluenceSoirRoulotte.put(20.0, 12);
+            affluenceSoirRoulotte.put(20.25, 16);
+            affluenceSoirRoulotte.put(20.50, 15);
+            affluenceSoirRoulotte.put(20.75, 13);
+            affluenceSoirRoulotte.put(21.0, 9);
+            affluenceSoirRoulotte.put(21.5, 7);
+            affluenceSoirRoulotte.put(21.75, 6);
+
             Restaurant roulotteDoree = new Restaurant("La Roulotte Dorée", 45.782565, 4.876553,
-                    avisRoulotteDoree, null, null, menuSoirRoulotte, null, null, null, 5.0);
+                    avisRoulotteDoree, null, null, menuSoirRoulotte, null, null, affluenceSoirRoulotte, 5.0);
             this.restaurants.add(roulotteDoree);
 
             //Restaurant Ali Baba Kebab
@@ -256,8 +318,32 @@ public class DataSingleton {
 
             Menu menuSoirKebab = new Menu(null, platSoirKebab, dessertSoirKebab);
 
+            TreeMap<Double,Integer> affluenceSoirNinka = new TreeMap<>();
+            TreeMap<Double,Integer> affluenceMidiNinka = new TreeMap<>();
+
+            affluenceSoirNinka.put(18.5, 7);
+            affluenceSoirNinka.put(18.75, 9);
+            affluenceSoirNinka.put(19.0, 12);
+            affluenceSoirNinka.put(19.25, 15);
+            affluenceSoirNinka.put(19.50, 18);
+            affluenceSoirNinka.put(19.75, 14);
+            affluenceSoirNinka.put(20.0, 20);
+            affluenceSoirNinka.put(20.25, 22);
+            affluenceSoirNinka.put(20.50, 18);
+            affluenceSoirNinka.put(21.0, 15);
+            affluenceSoirNinka.put(21.5, 13);
+            affluenceSoirNinka.put(22.0, 9);
+
+            affluenceMidiNinka.put(11.5, 6);
+            affluenceMidiNinka.put(12.0, 8);
+            affluenceMidiNinka.put(12.5, 16);
+            affluenceMidiNinka.put(12.8, 10);
+            affluenceMidiNinka.put(12.9, 14);
+            affluenceMidiNinka.put(13.0, 12);
+            affluenceMidiNinka.put(13.5, 10);
+
             Restaurant ninkasi = new Restaurant("Ninkasi", 45.778878, 4.872942, avisNinkasi, null,
-                    menuMidiKebab, menuSoirKebab, null, null, null, 7.0);
+                    menuMidiKebab, menuSoirKebab, null, affluenceMidiNinka, affluenceSoirNinka, 7.0);
             this.restaurants.add(ninkasi);
         } catch (Exception e) {
             e.printStackTrace();
