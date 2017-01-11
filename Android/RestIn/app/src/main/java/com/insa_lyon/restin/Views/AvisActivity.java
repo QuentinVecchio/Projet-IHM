@@ -27,6 +27,8 @@ import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 
+import java.util.Date;
+
 public class AvisActivity extends AppCompatActivity {
 
     private Button buttonPublish;
@@ -42,13 +44,15 @@ public class AvisActivity extends AppCompatActivity {
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         int position = this.getIntent().getIntExtra("restaurantIndex",-1);
         if(position != -1) {
             this.restaurant = DataSingleton.getInstance().getRestaurant(position);
-            this.getSupportActionBar().setTitle(this.restaurant.getName());
+            this.getSupportActionBar().setTitle("Avis - " + this.restaurant.getName());
         } else {
             this.restaurant = null;
         }
+
         avisListView = (ListView) findViewById(R.id.avisListView);
         AvisListViewAdapter avisListViewAdapter = new AvisListViewAdapter(this, restaurant.getAvis());
         avisListView.setAdapter(avisListViewAdapter);
@@ -107,7 +111,7 @@ public class AvisActivity extends AppCompatActivity {
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Avis avis = new Avis(avisEditText.getText().toString(), (double) ratingBar.getRating());
+                Avis avis = new Avis(avisEditText.getText().toString(), (double) ratingBar.getRating(), new Date());
                 restaurant.getAvis().add(0,avis);
                 ((BaseAdapter)avisListView.getAdapter()).notifyDataSetChanged();
                 avisEditText.setText("");

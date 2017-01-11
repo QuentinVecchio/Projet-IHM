@@ -13,7 +13,10 @@ import com.insa_lyon.restin.Modeles.Avis;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Jack on 10/01/2017.
@@ -45,14 +48,15 @@ public class AvisListViewAdapter extends BaseAdapter {
             layoutItem = (LinearLayout) convertView;
         }
 
-
+        TextView dateTextView = (TextView)layoutItem.findViewById(R.id.dateTextView);
         TextView avisTextView = (TextView)layoutItem.findViewById(R.id.avisTextView);
         RatingBar ratingBar = (RatingBar)layoutItem.findViewById(R.id.ratingBar);
 
-
-
         Avis itemAvis = avis.get(position);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.FRENCH);
 
+
+        dateTextView.setText(dateFormat.format(itemAvis.getDate()));
         avisTextView.setText(itemAvis.getAvis());
         ratingBar.setRating((float)itemAvis.getNote());
         return layoutItem;
