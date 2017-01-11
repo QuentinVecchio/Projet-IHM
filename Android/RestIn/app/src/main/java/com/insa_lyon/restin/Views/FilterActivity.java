@@ -1,5 +1,6 @@
 package com.insa_lyon.restin.Views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -14,12 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
@@ -38,7 +40,7 @@ import java.util.List;
 public class FilterActivity extends AppCompatActivity {
     private Button clickButton;
     private LinearLayout bottomSheet;
-    private ScrollView items;
+    private RelativeLayout items;
     private SearchView searchView;
     private ListView listView;
     private RangeSeekBar price_bar;
@@ -65,7 +67,7 @@ public class FilterActivity extends AppCompatActivity {
         this.getSupportActionBar().setTitle(R.string.filters);
         bottomSheet = (LinearLayout) findViewById(R.id.bottomSheet);
         bottomSheet.setOnClickListener(null);
-        items = (ScrollView) findViewById(R.id.scroll_filter);
+        items = (RelativeLayout) findViewById(R.id.scroll_filter);
         clickButton = (Button) findViewById(R.id.button2);
         price_bar = (RangeSeekBar) findViewById(R.id.price_filter);
         time_bar = (RangeSeekBar) findViewById(R.id.time_filter);
@@ -180,7 +182,6 @@ public class FilterActivity extends AppCompatActivity {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
             }
-
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 float visibleBottomSheetHeight = (bottomSheet.getHeight() - bottomSheetBehavior.getPeekHeight()) * slideOffset + bottomSheetBehavior.getPeekHeight();
@@ -227,11 +228,20 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        searchView.setFilterTouchesWhenObscured(true);
+        //searchView.setFilterTouchesWhenObscured(true);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchView.setIconified(false);
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromInputMethod(searchView.getWindowToken(), 0);
+                return false;
             }
         });
 

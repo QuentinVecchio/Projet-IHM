@@ -42,7 +42,8 @@
         <activity android:name=".Views.AvisActivity" >
         </activity>
 
-        <activity android:name=".Views.FilterActivity" >
+        <activity android:name=".Views.FilterActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <meta-data
