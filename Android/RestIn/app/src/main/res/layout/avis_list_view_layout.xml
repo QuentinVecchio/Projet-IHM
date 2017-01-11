@@ -7,21 +7,41 @@
     android:paddingRight="10dp"
     android:paddingStart="10dp">
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="true"
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:numStars="5"
-        android:rating="4"
-        android:stepSize="1"
-        android:id="@+id/ratingBar" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RatingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="1"
+                android:id="@+id/ratingBar" />
+        </LinearLayout>
+
+        <TextView
+            android:text="21/05 12:40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTextView"
+            android:layout_weight="1.13"
+            android:textAlignment="textEnd" />
+
+    </LinearLayout>
 
     <TextView
-        android:text="Bon petit repas avec les amis \r\n :) "
+        android:text="Bon petit repas avec les amis :) "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="30px"
         android:id="@+id/avisTextView" />
 
 </LinearLayout>
