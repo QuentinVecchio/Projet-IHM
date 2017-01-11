@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
+
+import java.text.DecimalFormat;
 
 
 /**
@@ -31,14 +34,26 @@ public class RestaurantInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         View view = this.activity.getLayoutInflater().inflate(R.layout.restautant_info_window_layout, null);
 
         TextView nameTextView = (TextView)view.findViewById(R.id.nameTextView);
+        TextView priceTextView = (TextView)view.findViewById(R.id.priceTextView);
         TextView waitingTimeTextView = (TextView)view.findViewById(R.id.waitingTimeTextView);
         TextView distanceTextView = (TextView)view.findViewById(R.id.distanceTextView);
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
+        Restaurant restaurant = activity.getMapMarkersRestaurants().get(marker);
+
         nameTextView.setText(marker.getTitle());
-        waitingTimeTextView.setText("Attente : 2 min");
-        distanceTextView.setText("Distance : 150 m");
-        ratingBar.setRating((float)activity.getMapMarkersRestaurants().get(marker).getMoyenneNote());
+        priceTextView.setText("Prix moyen : " + restaurant.getPrixMoyen() + "€");
+        if(restaurant.getDuration() != -1) {
+            waitingTimeTextView.setText("Attente : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
+        } else {
+            waitingTimeTextView.setText("Attente : ?");
+        }
+        if(restaurant.getDuration() != -1) {
+            distanceTextView.setText("Distance : " +   new DecimalFormat("##.#").format(restaurant.getDistance()/1000.0) + " km");
+        } else {
+            distanceTextView.setText("Distance : ?");
+        }
+        ratingBar.setRating((float)restaurant.getMoyenneNote());
 
         return view;
     }

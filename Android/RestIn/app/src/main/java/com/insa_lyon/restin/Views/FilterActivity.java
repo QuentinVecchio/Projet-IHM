@@ -2,6 +2,7 @@ package com.insa_lyon.restin.Views;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,18 +22,21 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import static android.R.id.list;
 
 public class FilterActivity extends AppCompatActivity {
     private Button clickButton;
@@ -44,6 +49,19 @@ public class FilterActivity extends AppCompatActivity {
     private RangeSeekBar distance_bar;
     private RatingBar ratingBar;
     private Spinner spinner;
+    private double minPrice;
+    private double maxPrice;
+    private double minDistance;
+    private double maxDistance;
+    private double minTime;
+    private double maxTime;
+    private double minRating;
+    private String sortingBy;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +69,7 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setTitle(R.string.filters);
-        bottomSheet = (LinearLayout)findViewById(R.id.bottomSheet);
+        bottomSheet = (LinearLayout) findViewById(R.id.bottomSheet);
         bottomSheet.setOnClickListener(null);
         items = (ScrollView) findViewById(R.id.scroll_filter);
         clickButton = (Button) findViewById(R.id.button2);
@@ -60,27 +78,86 @@ public class FilterActivity extends AppCompatActivity {
         distance_bar = (RangeSeekBar) findViewById(R.id.distance_filter);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         spinner = (Spinner) findViewById(R.id.spinner);
+        //on recupere les valeurs des filtres
+        maxPrice = price_bar.getSelectedMaxValue().doubleValue();
+        minPrice = price_bar.getSelectedMinValue().doubleValue();
+        maxTime = time_bar.getSelectedMaxValue().doubleValue();
+        minTime = time_bar.getSelectedMinValue().doubleValue();
+        maxDistance = distance_bar.getSelectedMaxValue().doubleValue();
+        minDistance = distance_bar.getSelectedMinValue().doubleValue();
+        minRating = ratingBar.getRating();
+        sortingBy = spinner.getSelectedItem().toString();
         //SearchBar
         searchView = (SearchView) findViewById(R.id.search_filter);
         //ListView
         listView = (ListView) findViewById(R.id.restaurantListView);
-        final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, DataSingleton.getInstance().getRestaurants());
+        List<Restaurant> restaurantList = applySort();
+        final RestaurantListViewAdapter adapter = new RestaurantListViewAdapter(this, restaurantList);
         listView.setAdapter(adapter);
-
         listView.requestFocus();
-        clickButton.setOnClickListener( new View.OnClickListener() {
+        clickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* action */
+                //on met les valeurs par defaut
+                maxPrice = 20;
+                minPrice = 0;
+                maxTime = 200;
+                minTime = 0;
+                maxDistance = 5000;
+                minDistance = 0;
+                minRating = 0;
+                //on effectue la modification sur les filtres
+                price_bar.setSelectedMaxValue(maxPrice);
+                price_bar.setSelectedMinValue(minPrice);
+                time_bar.setSelectedMaxValue(maxTime);
+                time_bar.setSelectedMinValue(minTime);
+                distance_bar.setSelectedMaxValue(maxDistance);
+                distance_bar.setSelectedMinValue(minDistance);
+                ratingBar.setRating((float)minRating);
+                spinner.setSelection(0);
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
+            }
+        });
+        price_bar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                minPrice = ((Number) minValue).doubleValue();
+                maxPrice = ((Number) maxValue).doubleValue();
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
+            }
+        });
 
+        time_bar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                minTime = ((Number) minValue).doubleValue();
+                maxTime = ((Number) maxValue).doubleValue();
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
+            }
+        });
+
+        distance_bar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                minDistance = ((Number) minValue).doubleValue();
+                maxDistance = ((Number) maxValue).doubleValue();
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                listView = (ListView) findViewById(R.id.restaurantListView);
-                List<Restaurant> restaurantList = DataSingleton.getInstance().getRestaurants();
-                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this,restaurantList);
+                sortingBy = spinner.getSelectedItem().toString();
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
                 listView.setAdapter(adapter2);
             }
 
@@ -89,6 +166,16 @@ public class FilterActivity extends AppCompatActivity {
                 // your code here
             }
 
+        });
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
+
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                minRating = (double)rating;
+                List<Restaurant> restaurantList = applySort();
+                final RestaurantListViewAdapter adapter2 = new RestaurantListViewAdapter(FilterActivity.this, restaurantList);
+                listView.setAdapter(adapter2);
+            }
         });
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -100,11 +187,11 @@ public class FilterActivity extends AppCompatActivity {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                float visibleBottomSheetHeight = (bottomSheet.getHeight() - bottomSheetBehavior.getPeekHeight()) * slideOffset+bottomSheetBehavior.getPeekHeight();
+                float visibleBottomSheetHeight = (bottomSheet.getHeight() - bottomSheetBehavior.getPeekHeight()) * slideOffset + bottomSheetBehavior.getPeekHeight();
 
                 //LayoutParams
-                ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_filter);
-                android.view.ViewGroup.LayoutParams layoutParams = scrollView.getLayoutParams();
+                ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_filter);
+                ViewGroup.LayoutParams layoutParams = scrollView.getLayoutParams();
 
                 //ScreenHeight
                 Display display = getWindowManager().getDefaultDisplay();
@@ -119,7 +206,7 @@ public class FilterActivity extends AppCompatActivity {
                 int statusBarHeight = rectangle.top;
 
                 //Updating MapViewLayoutHeight
-                layoutParams.height = screenHeight - ((int)Math.ceil(visibleBottomSheetHeight)) - getSupportActionBar().getHeight() - statusBarHeight;
+                layoutParams.height = screenHeight - ((int) Math.ceil(visibleBottomSheetHeight)) - getSupportActionBar().getHeight() - statusBarHeight;
                 scrollView.setLayoutParams(layoutParams);
             }
 
@@ -137,6 +224,7 @@ public class FilterActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                //on passe a la vue restaurant
                 /*Restaurant restaurant = (Restaurant)adapter.getItem(position);
                 CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(restaurant.getLat(),restaurant.getLon()));
                 googleMap.moveCamera(center);
@@ -151,6 +239,9 @@ public class FilterActivity extends AppCompatActivity {
                 searchView.setIconified(false);
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -163,4 +254,78 @@ public class FilterActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public List<Restaurant> applySort() {
+        ArrayList<Restaurant> restaurantList = (ArrayList<Restaurant>) DataSingleton.getInstance().getRestaurants().clone();
+        //on verifie le prix
+        for (int i = restaurantList.size() - 1; i >= 0; i--) {
+            double prix = restaurantList.get(i).getPrixMoyen();
+            if (prix > this.maxPrice || prix < this.minPrice) {
+                restaurantList.remove(i);
+            }
+        }
+        //on verifie le temps
+        //on verifie la distance
+        //on verifie la qualite
+        for (int i = restaurantList.size() - 1; i >= 0; i--) {
+            double rate = restaurantList.get(i).getMoyenneNote();
+            if (rate < this.minRating) {
+                restaurantList.remove(i);
+            }
+        }
+        //on trie dans l'ordre demandé
+        switch (sortingBy) {
+            case "Prix moyen":
+            {
+                //on trie en fonction du prix asc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getPrixMoyen()<r2.getPrixMoyen()) {
+                            return -1;
+                        }
+                        if(r1.getPrixMoyen()>r2.getPrixMoyen()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                });
+                break;
+            }
+            case "Temps d'attente":
+            {
+
+                break;
+            }
+            case "Distance":
+            {
+
+                break;
+            }
+            case "Qualité":
+            {
+                //on trie en fonction de la qualité desc
+                Collections.sort(restaurantList, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant r1, Restaurant r2)
+                    {
+                        if(r1.getMoyenneNote()<r2.getMoyenneNote()) {
+                            return 1;
+                        }
+                        if(r1.getMoyenneNote()>r2.getMoyenneNote()) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                });
+                break;
+            }
+        }
+        for (int i =0;i<restaurantList.size(); i++) {
+            System.out.println("prix : "+restaurantList.get(i).getPrixMoyen());
+        }
+        return restaurantList;
+    }
+
 }

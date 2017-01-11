@@ -24,8 +24,8 @@
         <org.florescu.android.rangeseekbar.RangeSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:absoluteMaxValue="20"
-            app:absoluteMinValue="0"
+            app:absoluteMaxValue="20.0"
+            app:absoluteMinValue="0.0"
             app:valuesAboveThumbs="true"
             app:textAboveThumbsColor="@android:color/holo_red_dark"
             android:id="@+id/price_filter" />
