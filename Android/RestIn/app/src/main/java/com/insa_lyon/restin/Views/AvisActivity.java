@@ -22,6 +22,7 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.insa_lyon.restin.Modeles.Avis;
 import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
@@ -154,6 +155,16 @@ public class AvisActivity extends AppCompatActivity {
                         break;
                 }
 
+            }
+        });
+
+        LinearLayout letAvisTitleLayout = (LinearLayout)findViewById(R.id.letAvisTitleLayout);
+        letAvisTitleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
             }
         });
     }
