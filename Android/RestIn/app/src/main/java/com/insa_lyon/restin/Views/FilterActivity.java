@@ -128,6 +128,8 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+        price_bar.setColorFilter(R.color.colorPrimary);
+
         time_bar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
