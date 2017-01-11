@@ -14,6 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.text.Text;
 import com.insa_lyon.restin.Modeles.Avis;
 import com.insa_lyon.restin.Modeles.DataSingleton;
@@ -33,7 +42,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 import java.util.Vector;
 
-public class RestaurantActivity extends AppCompatActivity {
+public class RestaurantActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private Restaurant restaurant;
 
@@ -77,6 +86,10 @@ public class RestaurantActivity extends AppCompatActivity {
         } else {
             this.restaurant = null;
         }
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         this.viewPagerMenu = (ViewPager)findViewById(R.id.viewPageMenu);
         this.viewPagerGraph = (ViewPager) findViewById(R.id.viewGraph);
@@ -636,4 +649,24 @@ public class RestaurantActivity extends AppCompatActivity {
         viewPrix.setText("Prix moyen : " + String.valueOf(restaurant.getPrixMoyen()) + "€");
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        System.out.println("---"+restaurant);
+        if(this.restaurant != null) {
+            LatLng latLng = new LatLng(this.restaurant.getLat(), this.restaurant.getLon());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+            googleMap.moveCamera(center);
+            googleMap.animateCamera(zoom);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(restaurant.getLat(),restaurant.getLon()));
+            markerOptions.title(restaurant.getName());
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            Marker marker = googleMap.addMarker(markerOptions);
+            googleMap.getUiSettings().setZoomControlsEnabled(true);
+            googleMap.getUiSettings().setZoomGesturesEnabled(false);
+            googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        }
+    }
 }

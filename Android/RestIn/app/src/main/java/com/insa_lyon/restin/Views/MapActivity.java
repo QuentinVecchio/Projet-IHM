@@ -47,7 +47,6 @@ import com.insa_lyon.restin.Modeles.DataSingleton;
 import com.insa_lyon.restin.Modeles.Restaurant;
 import com.insa_lyon.restin.R;
 import com.insa_lyon.restin.Services.GoogleMapsDistanceMatrixRestClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
