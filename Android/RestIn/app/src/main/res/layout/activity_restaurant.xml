@@ -88,51 +88,59 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/avisLayoutLast">
 
-                    <TextView
-                        android:text="Dernier avis :"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lastAvisTitle"
-                        android:textAppearance="@style/TextAppearance.AppCompat"
-                        android:gravity="left"
-                        android:textSize="16sp"
-                        android:paddingRight="2dp"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginBottom="10dp" />
-
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal|center_vertical">
+                        android:id="@+id/lastAvisContainer">
 
-                        <RatingBar
+                        <TextView
+                            android:text="Dernier avis :"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/ratingBarAvis"
-                            android:numStars="5"
-                            android:isIndicator="true"
-                            style="@style/Widget.AppCompat.RatingBar.Indicator"
-                            android:layout_margin="2dp"
-                            android:rating="4"
-                            android:stepSize="0.1"
-                            android:gravity="right"></RatingBar>
+                            android:id="@+id/lastAvisTitle"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:gravity="left"
+                            android:textSize="16sp"
+                            android:paddingRight="2dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginBottom="10dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal|center_vertical">
+
+                            <RatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ratingBarAvis"
+                                android:numStars="5"
+                                android:isIndicator="true"
+                                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                                android:layout_margin="2dp"
+                                android:rating="4"
+                                android:stepSize="0.1"
+                                android:gravity="right"></RatingBar>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:text="Avis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/avisContainer"
+                            android:textAppearance="@style/TextAppearance.AppCompat"
+                            android:gravity="left"
+                            android:textSize="16sp"
+                            android:paddingRight="2dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp" />
 
                     </LinearLayout>
-
-                    <TextView
-                        android:text="Avis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/avisContainer"
-                        android:textAppearance="@style/TextAppearance.AppCompat"
-                        android:gravity="left"
-                        android:textSize="16sp"
-                        android:paddingRight="2dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp" />
 
                     <LinearLayout
                         android:orientation="vertical"

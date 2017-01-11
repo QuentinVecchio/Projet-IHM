@@ -55,6 +55,10 @@ public class RestaurantActivity extends AppCompatActivity {
     private Button buttonMenuSoir = null;
     private Button buttonMenuMatin = null;
 
+    private int posButtonMenuMidi = 0;
+    private int posButtonMenuSoir = 0;
+    private int posButtonGraphMidi = 0;
+    private int posButtonGraphSoir = 0;
 
     private Button buttonGraphMidi = null;
     private Button buttonGraphSoir = null;
@@ -85,14 +89,44 @@ public class RestaurantActivity extends AppCompatActivity {
 
         addViewAccordingToMenus(pagesMenu, titles1);
         addViewAccordingToGraph(pagesGraph, titles2);
+
         changeOnClickMenuButton();
         changeOnClickGraphButton();
 
+        setPageChangeListeners();
 
+        focusOnMenuButton(this.viewPagerMenu.getCurrentItem());
+        focusOnGraphButton(this.viewPagerGraph.getCurrentItem());
+        setRatingBar();
+        setAvis();
+        setPrixOnView();
+
+        setOnClickListenerButtonAvis();
+
+    }
+
+    @Override
+    public void onResume() {
+        
+    }
+
+    private void setOnClickListenerButtonAvis() {
+        Button buttonAvis = (Button) findViewById(R.id.avisButton);
+        buttonAvis.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RestaurantActivity.this, AvisActivity.class);
+                intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
+                RestaurantActivity.this.startActivity(intent);
+            }
+        });
+    }
+
+    private void setPageChangeListeners() {
         this.viewPagerMenu.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
@@ -100,9 +134,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
 
         this.viewPagerGraph.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -116,32 +148,8 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
-
-        focusOnMenuButton(this.viewPagerMenu.getCurrentItem());
-        focusOnGraphButton(this.viewPagerMenu.getCurrentItem());
-        setRatingBar();
-        setAvis();
-        setPrixOnView();
-
-        if(!this.restaurant.getAvis().isEmpty()) {
-            Button buttonAvis = (Button) findViewById(R.id.avisButton);
-            buttonAvis.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(RestaurantActivity.this, AvisActivity.class);
-                    intent.putExtra("restaurantIndex", DataSingleton.getInstance().getRestaurantPosition(restaurant));
-                    RestaurantActivity.this.startActivity(intent);
-                }
-            });
-        }
-
-
-
     }
 
     @Override
@@ -157,8 +165,6 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private void addViewAccordingToMenus(Vector<View> pagesViewMenu, Vector<String> titles1) {
 
-        boolean menuPresent = false;
-
         Menu menuMidi = restaurant.getMenuMidi();
         Menu menuSoir = restaurant.getMenuSoir();
         MenuMatin menuMatin = restaurant.getMenuMatin();
@@ -168,7 +174,6 @@ public class RestaurantActivity extends AppCompatActivity {
             remplirMenuMatin(menuMatin);
             pagesViewMenu.add(vueMenuMatin);
             buttonMenuMatin = (Button) findViewById(R.id.matinButton);
-            menuPresent = true;
         }
 
         if(menuMidi != null) {
@@ -177,7 +182,6 @@ public class RestaurantActivity extends AppCompatActivity {
                     R.id.dessertContainerMidi);
             pagesViewMenu.add(vueMenuMidi);
             buttonMenuMidi = (Button) findViewById(R.id.midiButton);
-            menuPresent = true;
         }
 
         if (menuSoir != null) {
@@ -186,14 +190,6 @@ public class RestaurantActivity extends AppCompatActivity {
                     R.id.dessertContainerSoir);
             pagesViewMenu.add(vueMenuSoir);
             buttonMenuSoir = (Button) findViewById(R.id.soirButton);
-            menuPresent = true;
-        }
-
-        if(!menuPresent) {
-            TextView viewNoMenu = new TextView(this);
-            viewNoMenu.setText("Le restaurant demandé n'a pas de menu pour ce jour.");
-            viewNoMenu.setGravity(Gravity.CENTER_HORIZONTAL & Gravity.CENTER_HORIZONTAL);
-            pagesViewMenu.add(viewNoMenu);
         }
 
         MenuAdapter menuAdapter = new MenuAdapter(this,pagesViewMenu,titles1);
@@ -331,21 +327,73 @@ public class RestaurantActivity extends AppCompatActivity {
         if(this.buttonMenuMidi == null) {
             findViewById(R.id.midiButton).setVisibility(View.GONE);
         } else {
-            this.viewPagerMenu.setCurrentItem(1);
+            if(this.buttonMenuMatin != null) {
+                this.posButtonMenuMidi = 1;
+                this.viewPagerMenu.setCurrentItem(this.posButtonMenuMidi);
+            }
             this.buttonMenuMidi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    viewPagerMenu.setCurrentItem(1);
+                    viewPagerMenu.setCurrentItem(posButtonMenuMidi);
                 }
             });
         }
         if(this.buttonMenuSoir == null) {
             findViewById(R.id.soirButton).setVisibility(View.GONE);
         } else {
+            if(this.buttonMenuMatin != null && this.buttonMenuMidi != null) {
+                this.posButtonMenuSoir = 2;
+            } else if ((this.buttonMenuMatin != null || this.buttonMenuMidi != null)
+                    && !(this.buttonMenuMatin != null && this.buttonMenuMidi != null)) {
+                this.posButtonMenuSoir = 1;
+            }
             this.buttonMenuSoir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    viewPagerMenu.setCurrentItem(2);
+                    viewPagerMenu.setCurrentItem(posButtonMenuSoir);
+                }
+            });
+        }
+    }
+
+    private void changeOnClickGraphButton() {
+        if(this.buttonGraphMatin == null) {
+            findViewById(R.id.matinButtonGraph).setVisibility(View.GONE);
+        } else {
+            this.buttonGraphMatin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(0);
+                }
+            });
+        }
+        if(this.buttonGraphMidi == null) {
+            findViewById(R.id.midiButtonGraph).setVisibility(View.GONE);
+        } else {
+            if(this.buttonGraphMatin != null) {
+                this.posButtonGraphMidi = 1;
+                this.viewPagerGraph.setCurrentItem(this.posButtonGraphMidi);
+            }
+            this.buttonGraphMidi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(posButtonGraphMidi);
+                }
+            });
+        }
+        if(this.buttonGraphSoir == null) {
+            findViewById(R.id.soirButtonGraph).setVisibility(View.GONE);
+        } else {
+            if(this.buttonGraphMatin != null && this.buttonGraphMidi != null) {
+                this.posButtonGraphSoir = 2;
+            } else if ((this.buttonGraphMatin != null || this.buttonGraphMidi != null)
+                    && !(this.buttonGraphMatin != null && this.buttonGraphMidi != null)) {
+                this.posButtonGraphSoir = 1;
+            }
+            this.buttonGraphSoir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPagerGraph.setCurrentItem(posButtonGraphSoir);
                 }
             });
         }
@@ -353,19 +401,27 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private void focusOnMenuButton(int currentItem) {
 
+        int nbPages = this.viewPagerMenu.getAdapter().getCount();
+
         switch (currentItem) {
             case 0 :
                 if(buttonMenuMatin != null ) {
                     selectButton(buttonMenuMatin);
-                    if(buttonMenuSoir != null) {
+                    if(nbPages == 1) {
+                        unselectButton(buttonMenuMidi);
                         unselectButton(buttonMenuSoir);
                     }
-                    if(buttonMenuMidi != null) {
+                    if(nbPages == 2 && buttonMenuMidi != null) {
                         unselectButton(buttonMenuMidi);
+                    }else if(nbPages == 2 && buttonMenuSoir != null) {
+                        unselectButton(buttonMenuSoir);
+                    } else {
+                        unselectButton(buttonMenuMidi);
+                        unselectButton(buttonMenuSoir);
                     }
                 } else if (buttonMenuMidi != null) {
                     selectButton(buttonMenuMidi);
-                    if(buttonMenuSoir != null) {
+                    if(nbPages > 1) {
                         unselectButton(buttonMenuSoir);
                     }
                 } else {
@@ -374,10 +430,21 @@ public class RestaurantActivity extends AppCompatActivity {
                 break;
             case 1 :
                 if (buttonMenuMidi != null) {
-                    selectButton(buttonMenuMidi);
-                    unselectButton(buttonMenuMatin);
-                    if(buttonMenuSoir != null) {
-                        unselectButton(buttonMenuSoir);
+                    if(buttonMenuMatin != null) {
+                        unselectButton(buttonMenuMatin);
+                        if(buttonMenuSoir != null) {
+                            unselectButton(buttonMenuSoir);
+                        }
+                        selectButton(buttonMenuMidi);
+
+                    } else {
+                        if(buttonMenuSoir != null && nbPages == 2) {
+                            selectButton(buttonMenuSoir);
+                            unselectButton(buttonMenuMidi);
+                        } else {
+                            selectButton(buttonMenuMidi);
+                            unselectButton(buttonMenuSoir);
+                        }
                     }
                 } else {
                     selectButton(buttonMenuSoir);
@@ -388,6 +455,67 @@ public class RestaurantActivity extends AppCompatActivity {
                 selectButton(buttonMenuSoir);
                 unselectButton(buttonMenuMatin);
                 unselectButton(buttonMenuMidi);
+                break;
+            default :
+                break;
+        }
+    }
+
+    private void focusOnGraphButton(int currentItem) {
+
+        int nbPages = this.viewPagerGraph.getAdapter().getCount();
+
+        switch (currentItem) {
+            case 0 :
+                if(buttonGraphMatin != null ) {
+                    selectButton(buttonGraphMatin);
+                    if(nbPages == 1) {
+                        unselectButton(buttonGraphMidi);
+                        unselectButton(buttonGraphSoir);
+                    }
+                    if(nbPages == 2 && buttonGraphMidi != null) {
+                        unselectButton(buttonGraphMidi);
+                    }else if(nbPages == 2 && buttonGraphSoir != null) {
+                        unselectButton(buttonGraphSoir);
+                    } else {
+                        unselectButton(buttonGraphMidi);
+                        unselectButton(buttonGraphSoir);
+                    }
+                } else if (buttonGraphMidi != null) {
+                    selectButton(buttonGraphMidi);
+                    if(nbPages > 1) {
+                        unselectButton(buttonGraphSoir);
+                    }
+                } else {
+                    selectButton(buttonGraphSoir);
+                }
+                break;
+            case 1 :
+                if (buttonGraphMidi != null) {
+                    if(buttonGraphMatin != null) {
+                        unselectButton(buttonGraphMatin);
+                        if(buttonGraphSoir != null) {
+                            unselectButton(buttonGraphSoir);
+                        }
+                        selectButton(buttonGraphMidi);
+                    } else {
+                        if(buttonGraphSoir != null && nbPages == 2) {
+                            selectButton(buttonGraphSoir);
+                            unselectButton(buttonGraphMidi);
+                        } else {
+                            selectButton(buttonGraphMidi);
+                            unselectButton(buttonGraphSoir);
+                        }
+                    }
+                } else {
+                    selectButton(buttonGraphSoir);
+                    unselectButton(buttonGraphMatin);
+                }
+                break;
+            case 2 :
+                selectButton(buttonGraphSoir);
+                unselectButton(buttonGraphMatin);
+                unselectButton(buttonGraphMidi);
                 break;
             default :
                 break;
@@ -407,14 +535,13 @@ public class RestaurantActivity extends AppCompatActivity {
     private void setRatingBar() {
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBarRestau);
         ratingBar.setRating((float)this.restaurant.getMoyenneNote());
-        /** TODO : faire check si y a des avis et afficher/cacher kes bons trucs**/
     }
 
     private void setAvis() {
         TextView avisAverage = (TextView) findViewById(R.id.avisAverage);
-        if(!this.restaurant.getAvis().isEmpty()) {
-            int nbAvis = this.restaurant.getAvis().size();
-            avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
+        int nbAvis = this.restaurant.getAvis().size();
+        avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
+        if(nbAvis != 0) {
             TextView lastAvisTitle = (TextView) findViewById(R.id.lastAvisTitle);
             Avis avisToShow = this.restaurant.getAvis().get(nbAvis - 1);
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.FRENCH);
@@ -426,7 +553,10 @@ public class RestaurantActivity extends AppCompatActivity {
             RatingBar avisRatingBar = (RatingBar) findViewById(R.id.ratingBarAvis);
             avisRatingBar.setRating((float)avisToShow.getNote());
         } else {
-            /** TODO : OKOKOKOKO AF FAIRE */
+            Button buttonTousLesAvis = (Button) findViewById(R.id.avisButton);
+            buttonTousLesAvis.setText("Ajouter un avis");
+            LinearLayout lastAvisContainer = (LinearLayout) findViewById(R.id.lastAvisContainer);
+            lastAvisContainer.setVisibility(View.GONE);
         }
     }
 
@@ -497,83 +627,6 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
         return max;
-    }
-
-    private void changeOnClickGraphButton() {
-        if(this.buttonGraphMatin == null) {
-            findViewById(R.id.matinButtonGraph).setVisibility(View.GONE);
-        } else {
-            this.buttonGraphMatin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewPagerGraph.setCurrentItem(0);
-                }
-            });
-        }
-        if(this.buttonGraphMidi == null) {
-            findViewById(R.id.midiButtonGraph).setVisibility(View.GONE);
-        } else {
-            this.viewPagerGraph.setCurrentItem(1);
-            this.buttonGraphMidi.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewPagerGraph.setCurrentItem(1);
-                }
-            });
-        }
-        if(this.buttonGraphSoir == null) {
-            findViewById(R.id.soirButtonGraph).setVisibility(View.GONE);
-        } else {
-            this.buttonGraphSoir.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewPagerGraph.setCurrentItem(2);
-                }
-            });
-        }
-    }
-
-    private void focusOnGraphButton(int currentItem) {
-
-        switch (currentItem) {
-            case 0 :
-                if(buttonGraphMatin != null ) {
-                    selectButton(buttonGraphMatin);
-                    if(buttonGraphSoir != null) {
-                        unselectButton(buttonGraphSoir);
-                    }
-                    if(buttonGraphMidi != null) {
-                        unselectButton(buttonGraphMidi);
-                    }
-                } else if (buttonGraphMidi != null) {
-                    selectButton(buttonGraphMidi);
-                    if(buttonGraphSoir != null) {
-                        unselectButton(buttonGraphSoir);
-                    }
-                } else {
-                    selectButton(buttonGraphSoir);
-                }
-                break;
-            case 1 :
-                if (buttonGraphMidi != null) {
-                    selectButton(buttonGraphMidi);
-                    unselectButton(buttonGraphMatin);
-                    if(buttonGraphSoir != null) {
-                        unselectButton(buttonGraphSoir);
-                    }
-                } else {
-                    selectButton(buttonGraphSoir);
-                    unselectButton(buttonGraphMatin);
-                }
-                break;
-            case 2 :
-                selectButton(buttonGraphSoir);
-                unselectButton(buttonGraphMatin);
-                unselectButton(buttonGraphMidi);
-                break;
-            default :
-                break;
-        }
     }
 
     private void setPrixOnView() {

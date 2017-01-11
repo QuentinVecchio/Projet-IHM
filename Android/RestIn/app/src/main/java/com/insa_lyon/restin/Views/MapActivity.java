@@ -211,7 +211,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
                 restaurantListViewAdapter.setRestaurants(restaurants);
-                mMap.clear();
+                if(mMap != null) {
+                    mMap.clear();
+                }
                 mapMarkersRestaurants.clear();
                 mapRestaurantsMarkers.clear();
                 for(Restaurant restaurant : restaurants) {
@@ -220,9 +222,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     markerOptions.title(restaurant.getName());
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
-                    Marker marker = mMap.addMarker(markerOptions);
-                    mapMarkersRestaurants.put(marker,restaurant);
-                    mapRestaurantsMarkers.put(restaurant,marker);
+                    if(mMap != null) {
+                        Marker marker = mMap.addMarker(markerOptions);
+                        mapMarkersRestaurants.put(marker, restaurant);
+                        mapRestaurantsMarkers.put(restaurant, marker);
+                    }
                 }
                 restaurantListViewAdapter.notifyDataSetChanged();
                 return false;
@@ -338,10 +342,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public boolean onMarkerClick(final Marker marker) {
                 // Calculate required horizontal shift for current screen density
+
+                //MapViewLayoutParams
                 final int dX = getResources().getDimensionPixelSize(R.dimen.map_dx);
                 // Calculate required vertical shift for current screen density
                 final int dY = getResources().getDimensionPixelSize(R.dimen.map_dy);
@@ -354,12 +361,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 final LatLng newLatLng = projection.fromScreenLocation(markerPoint);
                 // Buttery smooth camera swoop :)
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(newLatLng),500,null);
+
                 // Show the info window (as the overloaded method would)
-                marker.showInfoWindow();
-                return true; // Consume the event since it was dealt with
+                ViewGroup contentView = (ViewGroup)getWindow().getDecorView();
+                contentView.post(new Runnable() {
+                    public void run() {
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(newLatLng), 250, null);
+                    }
+                });
+
+
+                return false;
             }
         });
+
     }
 
     protected synchronized void buildGoogleApiClient() {
