@@ -557,12 +557,10 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         int nbAvis = this.restaurant.getAvis().size();
         avisAverage.setText("Note moyenne ("+ nbAvis + " avis) : ");
         if(nbAvis != 0) {
-            TextView lastAvisTitle = (TextView) findViewById(R.id.lastAvisTitle);
+            TextView lastAvisDate = (TextView) findViewById(R.id.avisDate);
             Avis avisToShow = this.restaurant.getAvis().get(0);
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.FRENCH);
-            DateFormat dateFormatTime = new SimpleDateFormat("HH:mm", Locale.FRENCH);
-            lastAvisTitle.setText("Dernier avis : " + dateFormat.format(avisToShow.getDate())
-                    + " à " + dateFormatTime.format(avisToShow.getDate()));
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.FRENCH);
+            lastAvisDate.setText(dateFormat.format(avisToShow.getDate()));
             TextView avisText = (TextView) findViewById(R.id.avisContainer);
             avisText.setText(avisToShow.getAvis());
             RatingBar avisRatingBar = (RatingBar) findViewById(R.id.ratingBarAvis);
