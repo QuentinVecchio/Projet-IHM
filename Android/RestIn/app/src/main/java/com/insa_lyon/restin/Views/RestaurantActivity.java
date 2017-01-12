@@ -48,6 +48,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -134,6 +135,8 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         setRatingBar();
         setAvis();
         setPrixOnView();
+        setDistanceOnView();
+        setTimeOnView();
 
         setOnClickListenerButtonAvis();
 
@@ -666,6 +669,25 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
     private void setPrixOnView() {
         TextView viewPrix = (TextView) findViewById(R.id.prixView);
         viewPrix.setText("Prix moyen : " + String.valueOf(restaurant.getPrixMoyen()) + "€");
+        viewPrix.setText("Prix moyen : " + String.valueOf(restaurant.getPrixMoyen()) + "€");
+    }
+
+    private void setDistanceOnView() {
+        TextView viewDistance = (TextView) findViewById(R.id.distanceView);
+        if(restaurant.getDuration() != -1) {
+            viewDistance.setText("Distance : " + new DecimalFormat("##.##").format(restaurant.getDistance()/1000.0) + " km");
+        } else {
+            viewDistance.setText("Distance : ?");
+        }
+    }
+
+    private void setTimeOnView() {
+        TextView viewTime = (TextView) findViewById(R.id.timeView);
+        if(restaurant.getDuration() != -1) {
+            viewTime.setText("Temps trajet à pieds : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
+        } else {
+            viewTime.setText("Temps trajet à pieds : ?");
+        }
     }
 
     @Override

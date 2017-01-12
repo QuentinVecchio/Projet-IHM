@@ -28,6 +28,54 @@
                 android:layout_height="300dp"
                 tools:context="com.insa_lyon.restin.Views.RestaurantActivity" />
 
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:background="@drawable/line_effect_restaurant_shape"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:text="Distance :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/distanceView"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:gravity="left"
+                    android:textSize="18sp"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:text="Temps :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timeView"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:gravity="left"
+                    android:textSize="18sp"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:text="Prix moyen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/prixView"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="20dp" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -267,31 +315,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"></android.support.v4.view.ViewPager>
 
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/prixContainer"
-                android:background="@drawable/line_effect_restaurant_shape"
-                android:gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <TextView
-                    android:text="Prix moyen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/prixView"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:paddingRight="2dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp" />
-
-
-            </LinearLayout>
 
             <TextView
                 android:text="Menu du jour"
