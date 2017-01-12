@@ -166,4 +166,36 @@ public class Restaurant {
             }
         });
     }
+
+    public Integer getTempsMoyen() {
+        Integer tempsMoyen = 0;
+        int sizeMatin = 0;
+        int sizeMidi = 0;
+        int sizeSoir = 0;
+        if(affluenceMatin != null) {
+            sizeMatin = affluenceMatin.size();
+            for(Double hour : affluenceMatin.keySet()) {
+                tempsMoyen += affluenceMatin.get(hour);
+            }
+        }
+        if(affluenceMidi != null) {
+            sizeMidi = affluenceMidi.size();
+            for(Double hour : affluenceMidi.keySet()) {
+                tempsMoyen += affluenceMidi.get(hour);
+            }
+        }
+        if(affluenceSoir != null) {
+            sizeSoir = affluenceSoir.size();
+            for(Double hour : affluenceSoir.keySet()) {
+                tempsMoyen += affluenceSoir.get(hour);
+            }
+            tempsMoyen = tempsMoyen / affluenceSoir.size();
+        }
+
+        if(sizeMatin + sizeMidi + sizeSoir == 0) {
+            return tempsMoyen;
+        }
+
+        return tempsMoyen / (sizeMatin + sizeMidi + sizeSoir);
+    }
 }
