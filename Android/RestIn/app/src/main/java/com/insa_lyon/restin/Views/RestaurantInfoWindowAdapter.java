@@ -43,11 +43,8 @@ public class RestaurantInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
 
         nameTextView.setText(marker.getTitle());
         priceTextView.setText("Prix moyen : " + restaurant.getPrixMoyen() + "€");
-        if(restaurant.getDuration() != -1) {
-            waitingTimeTextView.setText("Attente : " + new DecimalFormat("##.##").format(Math.ceil(restaurant.getDuration()/60.0)) + " min");
-        } else {
-            waitingTimeTextView.setText("Attente : ?");
-        }
+        waitingTimeTextView.setText("Attente moyenne : " + restaurant.getTempsMoyen() + " min");
+
         if(restaurant.getDuration() != -1) {
             distanceTextView.setText("Distance : " +   new DecimalFormat("##.#").format(restaurant.getDistance()/1000.0) + " km");
         } else {

@@ -189,7 +189,7 @@ public class Restaurant {
             for(Double hour : affluenceSoir.keySet()) {
                 tempsMoyen += affluenceSoir.get(hour);
             }
-            tempsMoyen = tempsMoyen / affluenceSoir.size();
+            
         }
 
         if(sizeMatin + sizeMidi + sizeSoir == 0) {
