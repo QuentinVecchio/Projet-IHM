@@ -184,13 +184,10 @@ public class DataSingleton {
             TreeMap<Double,Integer> affluenceMatinPrevert = new TreeMap<>();
 
             affluenceSoirPrevert.put(18.5, 2);
-            affluenceSoirPrevert.put(18.75, 4);
             affluenceSoirPrevert.put(19.0, 9);
-            affluenceSoirPrevert.put(19.25, 12);
             affluenceSoirPrevert.put(19.50, 14);
-            affluenceSoirPrevert.put(19.75, 10);
             affluenceSoirPrevert.put(20.0, 7);
-            affluenceSoirPrevert.put(20.25, 2);
+            affluenceSoirPrevert.put(20.50, 2);
 
             affluenceMatinPrevert.put(7.0, 2);
             affluenceMatinPrevert.put(7.25, 3);
@@ -254,13 +251,12 @@ public class DataSingleton {
             TreeMap<Double,Integer> affluenceMidiGrillon = new TreeMap<>();
             TreeMap<Double,Integer> affluenceMatinGrillon = new TreeMap<>();
 
-            affluenceSoirGrillon.put(18.5, 2);
-            affluenceSoirGrillon.put(18.75, 4);
+            affluenceSoirGrillon.put(18.0, 2);
+            affluenceSoirGrillon.put(18.5, 5);
             affluenceSoirGrillon.put(19.0, 9);
-            affluenceSoirGrillon.put(19.25, 12);
-            affluenceSoirGrillon.put(19.50, 14);
-            affluenceSoirGrillon.put(19.75, 10);
+            affluenceSoirGrillon.put(19.50, 10);
             affluenceSoirGrillon.put(20.0, 7);
+            affluenceSoirGrillon.put(20.50, 2);
 
             affluenceMatinGrillon.put(7.0, 2);
             affluenceMatinGrillon.put(7.25, 3);
