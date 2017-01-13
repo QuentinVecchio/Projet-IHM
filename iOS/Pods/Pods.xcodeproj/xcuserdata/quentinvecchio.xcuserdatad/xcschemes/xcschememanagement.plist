@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Cosmos.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-RestIn.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pulley.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,6 +42,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>2F0FE1E2A5B1EF15139E10A40F05CE94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>595F4AEC174623405429FD2EED003878</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>685614DC76DA52AF800D3319B5736895</key>
 		<dict>
 			<key>primary</key>
@@ -42,7 +62,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EFF95EA585AD48CE1A51B93D24E029D6</key>
+		<key>F99CA1188EF754DA891A9E984C69EC0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

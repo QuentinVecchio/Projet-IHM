@@ -3,6 +3,8 @@ PODS:
   - Charts/Realm (3.0.1):
     - Charts/Core
     - RealmSwift (~> 1.1)
+  - Cosmos (7.0.0)
+  - Pulley (1.3.0)
   - Realm (1.1.0):
     - Realm/Headers (= 1.1.0)
   - Realm/Headers (1.1.0)
@@ -11,12 +13,16 @@ PODS:
 
 DEPENDENCIES:
   - Charts/Realm
+  - Cosmos (~> 7.0)
+  - Pulley
 
 SPEC CHECKSUMS:
   Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
+  Cosmos: 2c8299147138758f6ebbb247cf1aeed77998bdf9
+  Pulley: 5123ca4b89cd89e3c7ac92b643f892aa7738f374
   Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
 
-PODFILE CHECKSUM: 1f306f335939cb7a7ef7a7aaf3e1f3e36c00fc35
+PODFILE CHECKSUM: cc3f9df87bc4007b5482562bfca169a39ddd6f00
 
 COCOAPODS: 1.1.1

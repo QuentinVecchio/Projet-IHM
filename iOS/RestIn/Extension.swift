@@ -19,6 +19,22 @@ extension UITextView{
     
 }
 
+extension String {
+    func countInstances(of stringToFind: String) -> Int {
+        var stringToSearch = self
+        var count = 0
+        repeat {
+            guard let foundRange = stringToSearch.range(of: stringToFind, options: .diacriticInsensitive)
+                else { break }
+            stringToSearch = stringToSearch.replacingCharacters(in: foundRange, with: "")
+            count += 1
+            
+        } while (true)
+        
+        return count
+    }
+}
+
 extension UIImage {
     
     func tintPhoto(_ tintColor: UIColor) -> UIImage {
