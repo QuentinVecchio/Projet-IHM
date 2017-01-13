@@ -521,7 +521,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
-                System.out.println("--FAILURE");
+
             }
         });
     }
